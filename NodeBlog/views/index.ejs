@@ -1,0 +1,15 @@
+<% include header %>
+  <article class="article row" v-for="article in articles" data-pid="{{article.pid}}">
+    <a href={{article.articleLink}} target="_blank"><img v-bind:src="article.cover" class="cover col-md-3"></a>
+    <div class="col-md-9">
+      <header><a href={{article.articleLink}} target="_blank">{{article.title}}</a></header>
+      <div class="summary">{{article.summary}}</div>
+      <p><span><a href={{article.userLink}} target="_blank"><i class="icon-user"></i>{{article.name}}</a></span><span><i class="icon-time"></i>{{article.date}}</span><span><i class="icon-eye-open"></i>{{article.views}}</span><span><i class="icon-comment"></i>{{article.comment}}</span></p>
+      <hr/>
+  </article>
+  <img src="/assets/images/loading.gif" alt="" class="col-md-3 col-md-offset-4 loading " v-show="load">
+  <p class="text-center nomore" v-show="nomore">没有更多了</p>
+  </div>
+  </div>
+  </div>
+  <%include footer %>
