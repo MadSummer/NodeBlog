@@ -2,8 +2,10 @@
 @ index
 */
 let common = require('./common');
-let vm = require('./vm');
-let open = false;
+let faskClick = require('./fastclick');
+let vm = require('./vm');   
+fastClick(document.body);   
+let open = false; 
 const load = function () {
   if (window.location.pathname === '/') {
     open = true;
@@ -21,7 +23,7 @@ const load = function () {
         let pid = res[i]._id;
         let date = common.formatDate(pid, 2);
         let views = res[i].views;
-        let comment = res[i].comment.length;
+        let comment = res[i].comment.length; 
         let userLink = '/u/' + res[i].uid;
         let articleLink = '/p/' + pid;
         let tempDiv = document.createElement('div')

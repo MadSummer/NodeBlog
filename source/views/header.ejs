@@ -6,12 +6,12 @@
     <%= title %>
   </title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1,user-scale=no">
   <link rel="stylesheet" href="/dest/stylesheets/font-awesome.min.css">
   <link rel='stylesheet' href='/dest/stylesheets/all.min.css' />
 </head>
 
-<body id="app">
+<body id="app" v-on:click="toggleSidebar">
   <header id="header">
     <a href="/" id="logo">
       <img src="http://vuejs.org.cn/images/logo.png" alt="">
@@ -43,6 +43,13 @@
       </ul>
     </nav>
   </header>
+  <header id="mobile-hd">
+    <a id="mobile-menu" v-on:click.stop="toggleSidebar"></a>
+    <img src="http://vuejs.org.cn/images/logo.png" alt="">
+  </header>
+  <aside id="sidebar" v-bind:class="{'open':sidebar}">
+
+  </aside>
   <div class="modal fade" id="dialog" data-backdrop="true">
     <div class="modal-dialog">
       <div class="modal-content">

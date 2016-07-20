@@ -23,16 +23,19 @@ let vm = new Vue({
       'delComment': delComment,
       'commentText': commentText
     },
-    showLoginPanel: false,
     scrollTop: false,
     articles: [],
     page: 1,
     load: false,
     nomore: false,
     searchPage: 1,
-    searchRes: []
+    searchRes: [],
+    sidebar:false
   },
   methods: {
+    toggleSidebar:function(){
+      this.sidebar = !this.sidebar;
+    },
     // 显示 /关闭登陆 
     toggleLoginPanel: function () {
       this.showLoginPanel = !this.showLoginPanel;
