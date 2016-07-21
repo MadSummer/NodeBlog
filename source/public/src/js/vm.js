@@ -30,10 +30,10 @@ let vm = new Vue({
     nomore: false,
     searchPage: 1,
     searchRes: [],
-    sidebar:false
+    sidebar: false
   },
   methods: {
-    toggleSidebar:function(){
+    toggleSidebar: function () {
       this.sidebar = !this.sidebar;
     },
     // 显示 /关闭登陆 

@@ -2,7 +2,7 @@
 #header{
   padding: 25px 60px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-}
+} 
 @media (max-width:768px){
   #header{
     display: none;
@@ -69,13 +69,14 @@
     position: absolute;
     background-image: url(../../assets/images/menu.png);
     background-size: 24px;
-  }
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+  } 
   #mobile-hd img{
-    width: 24px;
+    width: 24px; 
     height: 24px;
     display:  block;
-    margin: 0 auto;
-  }
+    margin: 0 auto; 
+  } 
   #sidebar{
     width: 70%;
     height: 100%;
@@ -86,7 +87,7 @@
     z-index: 9999;
     background-color: @color;
     transform: translate(-100%,0);
-    transition: transform 0.5s ;
+    transition: all 0.5s cubic-bezier(0.4,0,0,1);
   }
   #sidebar.open{
     transform: translate(0,0);

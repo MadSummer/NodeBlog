@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html >
 
 <head>
   <title>
@@ -11,7 +11,7 @@
   <link rel='stylesheet' href='/dest/stylesheets/all.min.css' />
 </head>
 
-<body id="app" v-on:click="toggleSidebar">
+<body id="app">
   <header id="header">
     <a href="/" id="logo">
       <img src="http://vuejs.org.cn/images/logo.png" alt="">
@@ -48,7 +48,7 @@
     <img src="http://vuejs.org.cn/images/logo.png" alt="">
   </header>
   <aside id="sidebar" v-bind:class="{'open':sidebar}">
-
+    <input type="text">
   </aside>
   <div class="modal fade" id="dialog" data-backdrop="true">
     <div class="modal-dialog">

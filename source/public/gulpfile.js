@@ -15,16 +15,16 @@ let sequence = require('gulp-sequence');
 let ap = require('gulp-autoprefixer');
 let del = require('del');
 gulp.task('css', () => {
-  return gulp.src(['./src/less/common.less', './src/less/index.less','./src/less/header.less', './src/less/article.less', './src/less/userpage.less', './src/less/post.less','./src/less/search.less'])
+  return gulp.src(['./src/less/common.less', './src/less/index.less', './src/less/header.less', './src/less/article.less', './src/less/userpage.less', './src/less/post.less', './src/less/search.less'])
     .pipe(concat('all.less'))
     .pipe(less())
-    .pipe(ap())
     .pipe(minifyCss())
     .pipe(rename('all.min.css'))
+    .pipe(ap())
     .pipe(gulp.dest('./dest/stylesheets'))
 });
 gulp.task('concat', () => {
-  return gulp.src(['./src/js/header.js', './src/js/index.js', './src/js/usepage.js', './src/js/article.js', './src/js/post.js', './src/js/vueModel.js'])
+  return gulp.src(['./src/js/index.js'])
     .pipe(concat('all.js'))
     .pipe(gulp.dest('./src/js/'))
 });

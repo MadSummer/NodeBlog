@@ -4,7 +4,7 @@
 if ($('#editor').length >= 1) {
   var editor = new wangEditor('editor');
   editor.config.uploadImgUrl = '/post/upload';
-  editor.config.uploadImgFileName = 'myFileName';
+  editor.config.uploadImgFileName = 'myFileName'; 
   editor.create();
   $('.postBtn').click(() => {
     if ($('input[name=title]').val().length < 1 || $('.textarea').val() < 1) {

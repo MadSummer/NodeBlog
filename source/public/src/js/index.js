@@ -1,11 +1,21 @@
 /*
 @ index
 */
-let common = require('./common');
-let faskClick = require('./fastclick');
-let vm = require('./vm');   
-fastClick(document.body);   
-let open = false; 
+let common = require('./common')
+let fastClick = require('fastclick');
+let vm = require('./vm');
+let open = false;
+// 定义mobile初始化函数
+{
+  let sidebar = document.getElementById('sidebar');
+  let mMenu = document.getElementById('mobile-menu');
+  document.body.addEventListener('click', (e) => {
+    if (e.target !== mMenu && !sidebar.contains(e.target)) {
+      vm.sidebar = false;
+    }
+  });
+}
+// 定义load函数
 const load = function () {
   if (window.location.pathname === '/') {
     open = true;
@@ -13,8 +23,8 @@ const load = function () {
       if (res.length == 0) {
         vm.nomore = true;
         vm.load = false;
-        return 
-      }
+        return;
+      }  
       vm.page = vm.page + 1;
       for (let i = 0; i < res.length; i++) {
         let title = res[i].title;
@@ -23,7 +33,7 @@ const load = function () {
         let pid = res[i]._id;
         let date = common.formatDate(pid, 2);
         let views = res[i].views;
-        let comment = res[i].comment.length; 
+        let comment = res[i].comment.length;
         let userLink = '/u/' + res[i].uid;
         let articleLink = '/p/' + pid;
         let tempDiv = document.createElement('div')
@@ -48,8 +58,12 @@ const load = function () {
       vm.load = false;
     });
   }
-}
+};
+// fastclick消除mobile 300ms delay
+fastClick(document.body);
+// 初始加载数据
 load();
+// 初始mobile
 window.onscroll = () => {
   // 两者document.documentElement.scrollTop||document.body.scrollTop有一个必定为0
   let scrollTop = (document.documentElement && document.documentElement.scrollTop) + document.body.scrollTop;
