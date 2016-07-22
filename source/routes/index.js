@@ -9,7 +9,8 @@ let router = express.Router();
 
 router.get('/', (req, res, next) => {
   res.render('index', {
-    title: '记笔',
+    title: '首页',
+    test:'test',
     loginUser: req.session.user,
     success: req.flash('success').toString(),
     error: req.flash('error').toString()
