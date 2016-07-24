@@ -8,8 +8,15 @@ let fs = require('fs');
 let eventproxy = require('eventproxy');
 let crypto = require('crypto');
 router.get('/', (req, res, next) => {
-  res.render('admin',{
-  })
+  console.log(req.session.user)
+  if(req.session.user){
+    res.render('admin', {
+    })
+  }
+  else{
+    res.render('login',{
+    })
+  }
 });
 router.post('/delArticle', (req, res, next) => {
   articleModel.get({ _id: req.body.pid }, (err, article) => {
@@ -39,7 +46,7 @@ router.post('/login', (req, res, next) => {
     else if (password === user.password) {
       req.flash('success', '登陆成功');
       req.session.user = user;
-      res.redirect('/');
+      res.redirect('/admin');
     }
     else {
       req.flash('error', '密码错误，请重新输入！');
@@ -95,6 +102,6 @@ router.post('/reg', (req, res) => {
 router.get('/logout', (req, res, next) => {
   req.session.user = null;
   req.flash('success', '退出成功！');
-  res.redirect('/');
+  res.redirect('/admin');
 });
 module.exports = router;

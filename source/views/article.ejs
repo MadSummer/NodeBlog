@@ -1,5 +1,5 @@
 <% include header %>
-  <article class="article wangEditor-container" data-pid="<%= article._id %>">
+  <article class="article" data-pid="<%= article._id %>">
     <h2 class="text-center">
       <%= article.title %>
     </h2>
@@ -11,7 +11,7 @@
       <span><span class="glyphicon glyphicon-eye-open"></span><%= article.views %></span>
       <span><span class="glyphicon glyphicon-comment"></span><%= article.comment.length %></span>
     </p>
-    <div class="content lh-hg wangEditor-txt">
+    <div class="content lh-hg">
       <%- article.content %>
     </div>
   </article>

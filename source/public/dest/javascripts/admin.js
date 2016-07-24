@@ -9,8 +9,8 @@ $().ready(()=>{
         content:$('#editor').val(),
         title:$('input[name=title]').val(),
       },
-      success:()=>{
-        alert('success')
+      success:(res)=>{
+        window.location = '/p/'+res._id;
       }
     })
   })

@@ -102,6 +102,7 @@ let vm = new Vue({
             if (res.length === 0) {
               this.nomore = true;
               this.loading = false;
+              this.mask = false;
               return;
             }
             this.page++;
