@@ -21,7 +21,8 @@ let articleSchema = mongoose.Schema({
   uid: String,
   name: String,
   comment: [commentSchema],
-  views: Number
+  views: Number,
+  tags:Array
 });
 // 删除评论
 articleSchema.methods.removeComment = function (i, callback) {

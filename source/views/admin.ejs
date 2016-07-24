@@ -9,18 +9,40 @@
 
   <body>
     <div class="container">
-      <h1>后台管理系统</h1>
-      <ul id="tab" class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#user" id="user-tab" role="tab" data-toggle="tab" aria-controls="user" aria-expanded="true">用户管理</a></li>
-        <li role="presentation" class=""><a href="#article" role="tab" id="article-tab" data-toggle="tab" aria-controls="article" aria-expanded="false">文章管理</a></li>
-        <li role="presentation" class="dropdown">
-          <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-            <li><a href="#dropdown1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
-            <li><a href="#dropdown2" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
-          </ul>
-        </li>
-      </ul>
+      <form class="form-horizontal" role="form" method="POST" action="/admin/login">
+        <div class="form-group">
+          <label for="firstname" class="col-sm-2 control-label">名字</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="firstname" placeholder="请输入名字" name="uid">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="lastname" class="col-sm-2 control-label">姓</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="lastname" placeholder="请输入姓" name="password">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">登录</button>
+          </div>
+        </div>
+        <h1>后台管理系统</h1>
+        <ul id="tab" class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#user" id="user-tab" role="tab" data-toggle="tab" aria-controls="user" aria-expanded="true">用户管理</a></li>
+          <li role="presentation" class=""><a href="#article" role="tab" id="article-tab" data-toggle="tab" aria-controls="article" aria-expanded="false">文章管理</a></li>
+          <li role="presentation" class="dropdown">
+            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
+              <li><a href="#dropdown1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
+              <li><a href="#dropdown2" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
+            </ul>
+          </li>
+        </ul>
     </div>
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>

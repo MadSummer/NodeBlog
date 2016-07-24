@@ -14,8 +14,8 @@ let buffer = require('vinyl-buffer');
 let sequence = require('gulp-sequence');
 let ap = require('gulp-autoprefixer');
 let del = require('del');
-gulp.task('css', () => {
-  return gulp.src(['./src/less/common.less', './src/less/index.less', './src/less/header.less', './src/less/article.less', './src/less/userpage.less', './src/less/post.less', './src/less/search.less'])
+gulp.task('less', () => {
+  return gulp.src(['./src/less/entry.less', './src/less/header.less', './src/less/index.less', './src/less/article.less', './src/less/userpage.less', './src/less/post.less', './src/less/search.less'])
     .pipe(concat('all.less'))
     .pipe(less())
     .pipe(minifyCss())
@@ -55,12 +55,12 @@ gulp.task('cleanconcat', () => {
   return del(['./src/js/all.js'])
 });
 // thunk only run once,need callback function 
-gulp.task('sequence', (cb) => {
+gulp.task('js', (cb) => {
   sequence('cleandest', 'concat', 'browserify', 'uglify', 'cleanconcat')(cb)
 });
 gulp.task('watch', () => {
-  gulp.watch('./src/js/*.js', ['sequence']);
-  gulp.watch('./src/less/*.less', ['css']);
+  gulp.watch('./src/js/*.js', ['js']);
+  gulp.watch('./src/less/**/*.less', ['less']);
 });
 
 

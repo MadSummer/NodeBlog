@@ -1,12 +1,31 @@
-<% include header %>
-<div class="form-group">
-  <label for="title">标题</label>
-  <input type="text" name="title" class="form-control " placeholder="请输入标题">
-</div>
-<label for="content">内容</label>
-<textarea id="editor" name="content" class="textarea" placeholder="请输入内容"></textarea>
-<button class="btn btn-block btn-success postBtn">发布</button>
-</div>
-</div>
-</div>
-<% include footer %>
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/dest/stylesheets/wangEditor.min.css">
+    <style>
+      #editor{min-height:400px}
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>发布文章</h1>
+      <div class="form-group">
+        <label for="title">标题</label>
+        <input type="text" name="title" class="form-control " placeholder="请输入标题">
+      </div>
+      <label for="content">内容</label>
+      <textarea id="editor" name="content" class="textarea" placeholder="请输入内容"></textarea>
+      <button class="btn btn-block btn-success postBtn">发布</button>
+    </div>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="/dest/javascripts/wangEditor.min.js"></script>
+    <script src="/dest/javascripts/admin.js"></script>
+  </body>
+
+</html>

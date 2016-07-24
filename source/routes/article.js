@@ -37,6 +37,7 @@ router.get('/:pid', (req, res, next) => {
       return res.redirect('/');
     }
     res.render('article', {
+      title:article.title,
       article: article,
       success: req.flash('success').toString(),
       error: req.flash('error').toString(),

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<!--
+  瞅啥么瞅
+-->
 <html >
 
 <head>
@@ -6,12 +9,14 @@
     <%= title %>
   </title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1,user-scale=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
   <link rel="stylesheet" href="/dest/stylesheets/font-awesome.min.css">
-  <link rel='stylesheet' href='/dest/stylesheets/all.min.css' />
+  <link rel="stylesheet" href="/dest/stylesheets/all.min.css" />
+  <link rel="stylesheet" href="/dest/stylesheets/wangEditor.min.css">
 </head>
 
-<body id="app">
+<body id="app" v-on:click="closeSidebar">
+  <div id="mask" v-show="mask"></div>
   <header id="header">
     <a href="/" id="logo">
       <img src="http://vuejs.org.cn/images/logo.png" alt="">
@@ -19,67 +24,74 @@
     </a>
     <nav id="nav">
       <ul>
-        <li>
+        <li class="search">
           <form action="/search">
             <input type="search" placeholder="请输入..." name="kw">
             <input type="hidden" placeholder="请输入..." name="page" value=1>
-            <button type="submit">
+            <button type="submit" class="button searchBtn" v-on:click.prevent="search">
               <i class="icon-search"></i>
             </button>
           </form>
         </li>
         <li>
-          <a href="" class="current">首页</a>
+          <a href="/" class="current">首页</a>
         </li>
         <li>
-          <a href="">Node</a>
+          <a href="/tag/node">Node</a>
         </li>
         <li>
-          <a href="">JS</a>
+          <a href="/tage/js">JS</a>
         </li>
         <li>
-          <a href="">CSS</a>
+          <a href="/tag/css">CSS</a>
         </li>
       </ul>
     </nav>
   </header>
   <header id="mobile-hd">
-    <a id="mobile-menu" v-on:click.stop="toggleSidebar"></a>
-    <img src="http://vuejs.org.cn/images/logo.png" alt="">
+    <a id="mobile-menu" v-on:click.stop="toggleSidebar"><i class="icon-reorder"></i></a>
+    <a href="/"><img src="http://vuejs.org.cn/images/logo.png" alt=""></a>
   </header>
-  <aside id="sidebar" v-bind:class="{'open':sidebar}">
-    <input type="text">
-  </aside>
-  <div class="modal fade" id="dialog" data-backdrop="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">操作提示</h4>
-        </div>
-        <div class="modal-body">
-          <p>确认删除吗？</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button id="confirm" type="button" class="btn btn-danger" v-on:click="sendAjax">确认</button>
-        </div>
-      </div>
-    </div>
-  </div>
   <div id="backtotop" v-show="scrollTop">
-    <a href="#app"><i class="glyphicon glyphicon-chevron-up"></i></a>
+    <a href="#app"><i class=" icon-arrow-up"></i></a>
   </div>
-  <div class="container wp">
+  <div class="container content">
     <% if(success){ %>
-      <p class="alert alert-success">
+      <p class="alert-success">
         <%= success %>
       </p>
-      <% } %>
-        <% if(error){ %>
-          <p class="alert alert-danger">
-            <%= error %>
-          </p>
-          <% } %>
-            <div class="row">
-              <div class="col-md-12" id="main">
+    <% } %>
+    <% if(error){ %>
+      <p class="alert-danger">
+        <%= error %>
+      </p>
+    <% } %>
+    <div class="row">
+      <div class="grid-1 side">
+        <aside id="sidebar" v-bind:class="{'open':sidebar}">
+          <ul class="list">
+            <li class="search">
+              <form action="/search">
+                <input type="search" placeholder="请输入..." name="kw">
+                <input type="hidden" placeholder="请输入..." name="page" value=1>
+                <button type="submit" class="button searchBtn" v-on:click.prevent="search">
+                  <i class="icon-search"></i>
+                </button>
+              </form>
+            </li>
+            <li>
+              <a href="/" class="current">首页</a>
+            </li>
+            <li>
+              <a href="/">Node</a>
+            </li>
+            <li>
+              <a href="/ ">JS</a>
+            </li>
+            <li>
+              <a href="/">CSS</a>
+            </li>
+            </ul>
+        </aside>
+      </div>
+      <div class="grid-4">

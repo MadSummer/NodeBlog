@@ -1,5 +1,5 @@
 <% include header %>
-  <article class="article" data-pid="<%= article._id %>">
+  <article class="article wangEditor-container" data-pid="<%= article._id %>">
     <h2 class="text-center">
       <%= article.title %>
     </h2>
@@ -10,39 +10,30 @@
       <span><span class="glyphicon glyphicon-time"></span><%= formatDate(article._id,2) %></span>
       <span><span class="glyphicon glyphicon-eye-open"></span><%= article.views %></span>
       <span><span class="glyphicon glyphicon-comment"></span><%= article.comment.length %></span>
-      <% if(loginUser && loginUser.uid === article.uid){ %>
-        <span><a id="delArticle"  data-toggle="modal" data-target="#dialog" v-on:click="setData"><i class="icon-trash"></i>删除</span></a>
-        <span><a id="editArticle"><i class="icon-edit"></i>编辑</span></a>
-        <% } %>
     </p>
-    <div class="content">
+    <div class="content lh-hg wangEditor-txt">
       <%- article.content %>
     </div>
   </article>
   <hr/>
   <h2>评论</h2>
-  <div class=" form-group newComment">
-    <textarea name="comment" rows="3" class="form-control "></textarea>
-  </div>
-  <button class="btn btn-default btn-success btn-block commentBtn" v-on:click="pushComment">评论</button>
-  <hr/>
-  <% article.comment.forEach(function(comment) { %>
-    <div class="comment row" data-cid="<%= comment._id %>">
-      <img src="/assets/images/user_avatar/default.png" alt="" class="col-md-1">
-      <div class="col-md-10">
-        <div class="row">
-          <span><a href="/u/<%= comment.uid%>" target="_blank"><%= comment.name %></a> <%= comment.date %></span>
-        </div>
-        <div class="row">
-          <span><%= comment.content %></span>
-        </div>
-      </div>
-      <% if(loginUser && loginUser.uid === comment.uid){ %>
-        <span><a class="delComment"  data-toggle="modal" data-target="#dialog" v-on:click="setData"><i class="icon-trash"></i>删除</span></a>
-        <% } %>
-    </div>
-    <hr/>
-    <% }) %>
+
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="<%= article._id %>" data-title="<%= article.title %>" data-url="/p/<%= article._id %>"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"z-blog-xhttkl"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
       </div>
       </div>
       </div>

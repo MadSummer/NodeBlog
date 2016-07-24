@@ -1,0 +1,44 @@
+.container{
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px; 
+  @media (min-width:768px){
+    width: 750px;
+  }
+  @media(min-width:992px){ 
+    width: 970px;
+  }
+  @media(min-width:1200px){
+    width: 1170px; 
+  }
+}
+.row{
+  margin: 10px 0;
+  .clearfix;
+}
+[class*="grid-"]{
+  float: left;
+  width: 100%;
+  position: relative;
+  padding: 0  10px;
+}
+@media (min-width:768px){
+  .grid-1{
+  width: 16.6667%;
+}
+.grid-2{
+  width: 33.3333%;
+}
+.grid-3{
+  width: 50%;
+}
+.grid-4{
+  width: 66.6667%;
+}
+.grid-5{
+  width: 83.3333%;
+}
+.grid-6{
+  width: 100%;
+}
+}

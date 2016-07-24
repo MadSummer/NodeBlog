@@ -1,0 +1,18 @@
+// Color
+.color(@color;@bg;@border){
+  color: @color;
+  background-color: @bg;
+  border: 1px solid @border;
+}
+.color-success{
+  .color(@state-success-text;@state-success-bg;@state-success-border);
+}
+.color-info{
+  .color(@state-info-text;@state-info-bg;@state-info-border);
+}
+.color-warning{
+  .color(@state-warning-text;@state-warning-bg;@state-warning-border);
+} 
+.color-danger{
+  .color(@state-danger-text;@state-danger-bg;@state-danger-border);
+}

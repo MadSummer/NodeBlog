@@ -1,4 +1,3 @@
-// reset.css
 /* 
 /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -419,56 +418,30 @@ textarea {
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
 }
-// 公共样式
+// self add
+
+*{
+  box-sizing: border-box;
+}
 html{
   font-size: 62.5%;
-  height: 100%;
-}
+  }
 body{
-  height: 100%;
-  background-color: #fbfbfc;
+  font-size: 1.4rem;
   font-family: "Arial","Microsoft yahei","Hiragino Sans GB",
   "冬青黑体简体中文 w3","Microsoft Yahei","Hiragino Sans GB","冬青黑体简体中文 w3",
   STXihei,"华文细黑","微软雅黑",SimSun,"宋体",Heiti,"黑体",sans-serif;
-  .fz(1.4rem);
+  color: @base-color;
+  line-height: 2rem;
 }
 a{
   text-decoration: none;
-  color: @light;
-}
-button{
-  border: 1px solid #ccc;
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: #fff;
-  cursor: pointer;
-}
-button:hover{
-  border: 1px solid @light;
+  color: @theme-color;
 }
 ul{
   margin: 0;
+  padding: 0;
 }
-// 常用函数
-.mt(@size:5px){
-  margin-top: @size;
+button{
+  cursor: pointer;
 }
-.mb(@size:5px){
-  margin-bottom: @size;
-}
-.mr(@size:5px){
-  margin-right: @size;
-}
-.ml(@size:5px){ 
-  margin-left: @size;
-}
-.fz(@size: 1rem){
-  font-size:@size; 
-}
-.ib {
-  display: inline-block;
-  vertical-align: middle;
-}
-// 常量
-@color:#2c3e50;
-@light:#42b983;

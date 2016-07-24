@@ -33,7 +33,7 @@ let upload = multer({
 router.get('/', (req, res, next) => {
   if (!req.session.user) {
     req.flash('error', '请先登录');
-    return res.redirect('/');
+    return res.redirect('/admin');
   }
   res.render('post', {
     title: '发布文章',
