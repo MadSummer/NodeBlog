@@ -8,7 +8,8 @@ let userSchema = mongoose.Schema({
     summary:String,
     zhihu:String,
     other:String,
-    follow:Array
+    follow:Array,
+    group:String
 });
 userSchema.statics.get = function (uid,callback) {
   this.model('users').findOne({uid:uid},callback);

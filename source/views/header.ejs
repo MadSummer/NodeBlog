@@ -2,7 +2,7 @@
 <!--
   瞅啥么瞅
 -->
-<html >
+<html>
 
 <head>
   <title>
@@ -19,7 +19,7 @@
   <div id="mask" v-show="mask"></div>
   <header id="header">
     <a href="/" id="logo">
-      <img src="http://vuejs.org.cn/images/logo.png" alt="">
+      <img src="/assets/images/logo.png" alt="">
       <span>记笔</span>
     </a>
     <nav id="nav">
@@ -45,13 +45,43 @@
         <li>
           <a href="/tag/css">CSS</a>
         </li>
+        <% if(loginUser) { %>
+        <li><a href="/user/<% loginUser.uid %>"><img src="/assets/images/user_avatar/default.png" alt="">MadSummer.</a></li>
+        <% } %>
+        <% if(!loginUser){ %>
+        <li><a href="">登陆/注册</a></li>
+        <% } %>
       </ul>
     </nav>
   </header>
   <header id="mobile-hd">
     <a id="mobile-menu" v-on:click.stop="toggleSidebar"><i class="icon-reorder"></i></a>
-    <a href="/"><img src="http://vuejs.org.cn/images/logo.png" alt=""></a>
+    <a href="/"><img src="/assets/images/logo.png" alt=""></a>
   </header>
+  <div id="sign">
+    <ul>
+      <li class="current">登陆</li>
+      <li>注册</li>
+    </ul>
+    <form id="signin"  class="input-group" method="POST" action="/user/signin">
+      <label for="uid">账号
+        <i class="icon-user"></i>
+      </label>
+      <input class="input" type="text" name="uid" id="uid">
+      <label for="password">密码
+        <i class="icon-lock"></i>
+      </label>
+      <input class="input" type="password" name="password" id="password">
+      <label for="rember">
+        记住我
+        <input id="rember" name="rember" type="checkbox" checked/>
+      </label>
+      <button type="submit" class="button-info button-block">登陆</button>
+    </form>
+    <form id="signup">
+
+    </form>
+  </div>
   <div id="backtotop" v-show="scrollTop">
     <a href="#app"><i class=" icon-arrow-up"></i></a>
   </div>
@@ -60,38 +90,38 @@
       <p class="alert-success">
         <%= success %>
       </p>
-    <% } %>
-    <% if(error){ %>
-      <p class="alert-danger">
-        <%= error %>
-      </p>
-    <% } %>
-    <div class="row">
-      <div class="grid-1 side">
-        <aside id="sidebar" v-bind:class="{'open':sidebar}">
-          <ul class="list">
-            <li class="search">
-              <form action="/search">
-                <input type="search" placeholder="请输入..." name="kw">
-                <input type="hidden" placeholder="请输入..." name="page" value=1>
-                <button type="submit" class="button searchBtn" v-on:click.prevent="search">
+      <% } %>
+        <% if(error){ %>
+          <p class="alert-danger">
+            <%= error %>
+          </p>
+          <% } %>
+            <div class="row">
+              <div class="grid-1 side">
+                <aside id="sidebar" v-bind:class="{'open':sidebar}">
+                  <ul class="list">
+                    <li class="search">
+                      <form action="/search">
+                        <input type="search" placeholder="请输入..." name="kw">
+                        <input type="hidden" placeholder="请输入..." name="page" value=1>
+                        <button type="submit" class="button searchBtn" v-on:click.prevent="search">
                   <i class="icon-search"></i>
                 </button>
-              </form>
-            </li>
-            <li>
-              <a href="/" class="current">首页</a>
-            </li>
-            <li>
-              <a href="/">Node</a>
-            </li>
-            <li>
-              <a href="/ ">JS</a>
-            </li>
-            <li>
-              <a href="/">CSS</a>
-            </li>
-            </ul>
-        </aside>
-      </div>
-      <div class="grid-4">
+                      </form>
+                    </li>
+                    <li>
+                      <a href="/" class="current">首页</a>
+                    </li>
+                    <li>
+                      <a href="/">Node</a>
+                    </li>
+                    <li>
+                      <a href="/ ">JS</a>
+                    </li>
+                    <li>
+                      <a href="/">CSS</a>
+                    </li>
+                  </ul>
+                </aside>
+              </div>
+              <div class="grid-4">

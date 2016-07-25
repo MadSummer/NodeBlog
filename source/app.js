@@ -6,19 +6,17 @@ let favicon = require('serve-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
-let multer = require('multer');
-/*session对话模块*/
+/*session模块*/
 let session = require('express-session');
 let MongoStore = require('connect-mongo')(session);
-
+// flash消息
+let flash = require('connect-flash');
+/*设置*/
+let settings = require('./settings');
 /*加载路由模块*/
 let index = require('./routes/index');
-let settings = require('./settings');
-let flash = require('connect-flash');
 let article = require('./routes/article');
-let userpage = require('./routes/userpage');
-let post = require('./routes/post');
-let upload = require('./routes/upload');
+let user = require('./routes/user');
 let search = require('./routes/search');
 let admin = require('./routes/admin');
 /*实例化app为一个express应用*/
@@ -27,14 +25,15 @@ let app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 app.use(session({
   secret: settings.cookieSecret,
   key: settings.db,//cookie name
-  cookie: { maxAge: 1000 * 60 * 60 * 24 * 30 },//30 days
   store: new MongoStore({
     url: 'mongodb://localhost/blog'
   })
 }));
+
 app.use(flash());
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -46,13 +45,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'upload')));
 // router control
 app.use('/', index);
-app.use('/logout', index);
-app.use('/u', userpage);
-app.use('/p', article);
-app.use('/post', post);
-app.use('/upload', upload);
+app.use('/user', user);
+app.use('/article', article);
 app.use('/search', search);
-app.use('/admin',admin);
+app.use('/admin', admin);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   let err = new Error('Not Found');

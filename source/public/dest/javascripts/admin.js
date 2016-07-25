@@ -10,6 +10,7 @@ $().ready(()=>{
         title:$('input[name=title]').val(),
       },
       success:(res)=>{
+        alert('/p/'+res._id);
         window.location = '/p/'+res._id;
       }
     })
