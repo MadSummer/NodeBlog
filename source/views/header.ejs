@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="/dest/stylesheets/wangEditor.min.css">
 </head>
 
-<body id="app" v-on:click="closeSidebar">
-  <div id="mask" v-show="mask"></div>
+<body id="app">
+  <div id="mask" v-show="mask" v-on:click="closeMask"></div>
   <header id="header">
     <a href="/" id="logo">
       <img src="/assets/images/logo.png" alt="">
@@ -46,10 +46,10 @@
           <a href="/tag/css">CSS</a>
         </li>
         <% if(loginUser) { %>
-        <li><a href="/user/<% loginUser.uid %>"><img src="/assets/images/user_avatar/default.png" alt="">MadSummer.</a></li>
+        <li class="user"><a href="/user/<% loginUser.uid %>"><img src="/assets/images/user_avatar/default.png" alt="">MadSummer.</a></li>
         <% } %>
         <% if(!loginUser){ %>
-        <li><a href="">登陆/注册</a></li>
+        <li><a v-on:click="openSign">登陆/注册</a></li>
         <% } %>
       </ul>
     </nav>
@@ -58,12 +58,12 @@
     <a id="mobile-menu" v-on:click.stop="toggleSidebar"><i class="icon-reorder"></i></a>
     <a href="/"><img src="/assets/images/logo.png" alt=""></a>
   </header>
-  <div id="sign">
+  <div id="sign" v-show="state.sign">
     <ul>
-      <li class="current">登陆</li>
-      <li>注册</li>
+      <li v-bind:class="{'current':state.signin}" v-on:click="toggleSign">登陆</li>
+      <li v-bind:class="{'current':state.signup}" v-on:click="toggleSign">注册</li>
     </ul>
-    <form id="signin"  class="input-group" method="POST" action="/user/signin">
+    <form id="signin"  class="input-group" method="POST" action="/user/signin" v-show="state.signin">
       <label for="uid">账号
         <i class="icon-user"></i>
       </label>
@@ -78,11 +78,23 @@
       </label>
       <button type="submit" class="button-info button-block">登陆</button>
     </form>
-    <form id="signup">
-
+    <form id="signup" class="input-group" method="POST" action="/user/signup" v-show="state.signup">
+      <label for="uid">账号
+        <i class="icon-user"></i>
+      </label>
+      <input class="input" type="text" name="uid" id="uid">
+      <label for="password">密码
+        <i class="icon-lock"></i>
+      </label>
+      <input class="input" type="password" name="password" id="password">
+      <label for="password-repeat">确认密码
+        <i class="icon-lock"></i>
+      </label>
+      <input class="input" type="password" name="password-repeat" id="password-repeat">
+      <button type="submit" class="button-info button-block">注册</button>
     </form>
   </div>
-  <div id="backtotop" v-show="scrollTop">
+  <div id="backtotop" v-show="state.scrollTop">
     <a href="#app"><i class=" icon-arrow-up"></i></a>
   </div>
   <div class="container content">
@@ -98,17 +110,23 @@
           <% } %>
             <div class="row">
               <div class="grid-1 side">
-                <aside id="sidebar" v-bind:class="{'open':sidebar}">
+                <aside id="sidebar" v-bind:class="{'open':state.sidebar}">
                   <ul class="list">
                     <li class="search">
                       <form action="/search">
                         <input type="search" placeholder="请输入..." name="kw">
                         <input type="hidden" placeholder="请输入..." name="page" value=1>
                         <button type="submit" class="button searchBtn" v-on:click.prevent="search">
-                  <i class="icon-search"></i>
-                </button>
+                         <i class="icon-search"></i>
+                        </button>
                       </form>
                     </li>
+                    <% if(loginUser) { %>
+                    <li class="user"><a href="/user/<% loginUser.uid %>"><img src="/assets/images/user_avatar/default.png" alt="">MadSummer.</a></li>
+                    <% } %>
+                    <% if(!loginUser){ %>
+                    <li><a v-on:click="openSign">登陆/注册</a></li>
+                    <% } %>
                     <li>
                       <a href="/" class="current">首页</a>
                     </li>
@@ -120,6 +138,9 @@
                     </li>
                     <li>
                       <a href="/">CSS</a>
+                    </li>
+                    <li>
+                      <a href="/user/signout">退出</a>
                     </li>
                   </ul>
                 </aside>

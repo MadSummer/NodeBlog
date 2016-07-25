@@ -5,7 +5,6 @@ you might not need jquery:https://github.com/oneuijs/You-Dont-Need-jQuery/blob/m
 // 定义常用公共函数
 'use strict';
 let Vue = require('vue');
-let vs = require('vue-resource');
 let common = require('./common');
 let fastClick = require('fastclick');
 const loginPanel = document.getElementById('loginPanel');
@@ -18,7 +17,7 @@ const commentText = document.querySelector('textarea[name=comment]');
 const keyword = document.querySelectorAll('input[type=search]');
 const sidebar = document.getElementById('sidebar');
 const mMenu = document.getElementById('mobile-menu');
-Vue.use(vs);
+Vue.use(require('vue-resource'));
 let vm = new Vue({
   el: '#app',
   data: {
@@ -32,35 +31,26 @@ let vm = new Vue({
       'sidebar': sidebar,
       'mMenu': mMenu
     },
-    scrollTop: false,
+    state: {
+      mobile: false,
+      loading: false,
+      none: false,
+      sidebar: false,
+      sign: false,
+      signin: true,
+      signup: false,
+      scrollTop: false
+    },
     articles: [],
     page: 1,
-    loading: false,
-    mask: false,
-    nomore: false,
-    searchPage: 1,
-    searchRes: [],
-    sidebar: false,
-    isMobile: false
   },
   ready: function () {
     // faskclick
     fastClick(document.body);
     // resize
     if (document.body.clientWidth < 768) {
-        this.isMobile = true;
-        this.sidebar = false;
-      }
-    window.onresize = () => {
-      if (document.body.clientWidth < 768) {
-        this.isMobile = true;
-        this.sidebar = false;
-      }
-      else{
-        this.isMobile = false;
-        this.sidebar = true;
-      }
-    };
+      this.state.sidebar = false;
+    }
     // to top
     window.onscroll = () => {
       // 两者document.documentElement.scrollTop||document.body.scrollTop有一个必定为0
@@ -76,16 +66,31 @@ let vm = new Vue({
     this.load();
   },
   computed: {
-
+    mask: function () {
+      if (this.state.sidebar || this.state.sign || this.state.loading) {
+        return true;
+      }
+      if (!this.state.sidebar && !this.state.sign && !this.state.loading) {
+        return false;
+      }
+    }
   },
   methods: {
-    closeSidebar: function (e) {
-      if (e.target !== this.els.mMenu && !this.els.sidebar.contains(e.target)) {
-        this.sidebar = false;
-      }
+    closeMask: function () {
+      this.state.sidebar = false;
+      this.state.sign = false;
+    },
+    openSign: function () {
+      this.state.sign = true;
+      this.state.sidebar = false;
+    },
+    toggleSign: function (e) {
+      if (e.currentTarget.classList.contains('current')) return;
+      this.state.signin = !this.state.signin;
+      this.state.signup = !this.state.signup;
     },
     toggleSidebar: function () {
-      this.sidebar = !this.sidebar;
+      this.state.sidebar = !this.state.sidebar;
     },
     search: () => {
       if (keyword[0].value.length < 1 && keyword[1].value.length < 1) return alert('不输入让我搜索啥？');
@@ -94,15 +99,13 @@ let vm = new Vue({
     },
     load: function () {
       if (window.location.pathname === '/' && !this.loading) {
-        this.loading = true;
-        this.mask = true;
+        this.state.loading = true;
         this.$http.get('/load', { params: { 'page': this.page } })
           .then(function (response) {
             let res = response.json();
             if (res.length === 0) {
-              this.nomore = true;
-              this.loading = false;
-              this.mask = false;
+              this.state.nomore = true;
+              this.state.loading = false;
               return;
             }
             this.page++;
@@ -115,7 +118,7 @@ let vm = new Vue({
               let views = res[i].views;
               let comment = res[i].comment.length;
               let userLink = '/u/' + res[i].uid;
-              let articleLink = '/p/' + pid;
+              let articleLink = '/article/' + pid;
               let tempDiv = document.createElement('div')
               tempDiv.innerHTML = content;
               let summary = tempDiv.textContent.slice(0, 80);
@@ -134,8 +137,7 @@ let vm = new Vue({
                 cover
               });
             }
-            this.loading = false;
-            this.mask = false;
+            this.state.loading = false;
           });
       }
     }

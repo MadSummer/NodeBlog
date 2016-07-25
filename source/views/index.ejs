@@ -5,27 +5,26 @@
     </a>
     <div class="grid-4">
       <header>
-        <a href={{article.articleLink}} target="_blank">{{article.title}}</a>
+        <a href={{article.articleLink}} target="_blank" v-text="article.title"></a>
       </header>
-      <div class="summary">{{article.summary}}</div>
+      <div class="summary" v-text="article.summary"></div>
         <p class="row">
           <span>
-            <a href={{article.userLink}} target="_blank">
+            <a href={{article.userLink}} target="_blank" v-text="article.name">
               <i class="icon-user"></i>
-              {{article.name}}
             </a>
           </span>
-          <span>
-            <i class="icon-time"></i>{{article.date}}
+          <span v-text="article.date">
+            <i class="icon-time"></i>
           </span>
-          <span><i class="icon-eye-open"></i>{{article.views}}</span>
-          <span><i class="icon-comment"></i>{{article.comment}}</span>
+          <span v-text="article.views"><i class="icon-eye-open"></i></span>
+          <span v-text="article.comment"><i class="icon-comment"></i></span>
           <button class="button-success"><a href="{{article.articleLink}}">阅读全文</a></button>
         </p>
       </div>
   </article>
-  <button type="button" v-on:click="load" class="button-success block"><i class="icon-spinner" v-bind:class="{'icon-spin':loading}"></i>点击加载更多</button>
-  <p class="text-center" v-show="loading">没有更多了</p>
+  <button type="button" v-on:click="load" class="button-success block"><i class="icon-spinner" v-bind:class="{'icon-spin':state.loading}"></i>点击加载更多</button>
+  <p class="text-center" v-show="state.none">没有更多了</p>
   </div>
   </div>
   </div>
