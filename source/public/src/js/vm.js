@@ -7,29 +7,16 @@ you might not need jquery:https://github.com/oneuijs/You-Dont-Need-jQuery/blob/m
 let Vue = require('vue');
 let common = require('./common');
 let fastClick = require('fastclick');
-const loginPanel = document.getElementById('loginPanel');
 const backtotop = document.getElementById('backtotop');
-const logout = document.getElementById('logout');
-const delArticle = document.getElementById('delArticle');
-const delComment = document.getElementsByClassName('delComment');
-const confirm = document.getElementById('confirm');
-const commentText = document.querySelector('textarea[name=comment]');
-const keyword = document.querySelectorAll('input[type=search]');
 const sidebar = document.getElementById('sidebar');
-const mMenu = document.getElementById('mobile-menu');
 Vue.use(require('vue-resource'));
+Vue.use(require('vue-validator'));
 let vm = new Vue({
   el: '#app',
   data: {
     els: {
-      'loginPanel': loginPanel,
       'backtotop': backtotop,
-      'logout': logout,
-      'delArticle': delArticle,
-      'delComment': delComment,
-      'commentText': commentText,
       'sidebar': sidebar,
-      'mMenu': mMenu
     },
     state: {
       mobile: false,
@@ -40,10 +27,17 @@ let vm = new Vue({
       signin: true,
       signup: false,
       scrollTop: false,
-      sub:false
+      sub: false
     },
     articles: [],
     page: 1,
+    kw: '',
+    signinUid: undefined,
+    signinPw: undefined,
+    signUpUid: undefined,
+    signUpPw: undefined,
+    signinRm: undefined,
+    signupPwr: undefined
   },
   ready: function () {
     // faskclick
@@ -77,10 +71,6 @@ let vm = new Vue({
     }
   },
   methods: {
-    closeMask: function () {
-      this.state.sidebar = false;
-      this.state.sign = false;
-    },
     openSign: function () {
       this.state.sign = true;
       this.state.sidebar = false;
@@ -90,13 +80,12 @@ let vm = new Vue({
       this.state.signin = !this.state.signin;
       this.state.signup = !this.state.signup;
     },
-    toggleSidebar: function () {
-      this.state.sidebar = !this.state.sidebar;
-    },
     search: () => {
-      if (keyword[0].value.length < 1 && keyword[1].value.length < 1) return alert('不输入让我搜索啥？');
-      let kw = keyword[0].value + keyword[1].value;
+      if (this.kw.length < 1) return alert('不输入让我搜索啥？');
       window.location.href = '/search?page=1&kw=' + kw;
+    },
+    signin: function () {
+      if (!this.signinUid && !this.signinPw) return alert('妄想愚弄本夫！');
     },
     load: function () {
       if (window.location.pathname === '/' && !this.loading) {

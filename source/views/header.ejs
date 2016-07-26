@@ -26,8 +26,7 @@
       <ul>
         <li class="search">
           <form action="/search">
-            <input type="search" placeholder="请输入..." name="kw">
-            <input type="hidden" placeholder="请输入..." name="page" value=1>
+            <input type="search" placeholder="请输入..." name="kw" v-bind:value = "kw">
             <button type="submit" class="button searchBtn" v-on:click.prevent="search">
               <i class="icon-search"></i>
             </button>
@@ -46,7 +45,7 @@
           <a href="/tag/css">CSS</a>
         </li>
         <% if(loginUser) { %>
-        <li class="user clearfix" v-on:mouseover="state.sub =! state.sub" v-on:mouseout="state.sub =! state.sub">
+        <li class="user clearfix" v-on:mouseover="state.sub =! state.sub" v-on:mouseout="state.sub =!state.sub">
           <a href="/user/<%= loginUser.uid %>">
             <img src="/assets/images/user_avatar/default.png" alt=""><%= loginUser.name %>
           </a>
@@ -69,7 +68,7 @@
     </nav>
   </header>
   <header id="mobile-hd">
-    <a id="mobile-menu" v-on:click.stop="toggleSidebar"><i class="icon-reorder"></i></a>
+    <a id="mobile-menu" v-on:click.stop="this.state.sidebar=!this.state.sidebar"><i class="icon-reorder"></i></a>
     <img src="/assets/images/logo.png" alt="">
   </header>
   <div id="sign" v-show="state.sign" v-cloak>
@@ -77,35 +76,40 @@
       <li v-bind:class="{'current':state.signin}" v-on:click="toggleSign">登陆</li>
       <li v-bind:class="{'current':state.signup}" v-on:click="toggleSign">注册</li>
     </ul>
+    
+    <validator name="validationl">
     <form id="signin"  class="input-group" method="POST" action="/user/signin" v-show="state.signin">
       <label for="uid">账号
         <i class="icon-user"></i>
       </label>
-      <input class="input" type="text" name="uid" id="uid">
+      <input class="input" type="text" name="uid" id="uid"  v-model="signinUid" v-validate:signinUid="{requires:true}">
+        <p v-if="$validationl.signinUid.required" class="alert-danger" data-key="test">错误啦</p>
       <label for="password">密码
         <i class="icon-lock"></i>
       </label>
-      <input class="input" type="password" name="password" id="password">
+      <input class="input" type="password" name="password" id="password" v-model="signinPw">
       <label for="rember">
         记住我
-        <input id="rember" name="rember" type="checkbox" checked/>
+        <input id="rember" name="rember" type="checkbox" checked v-model="signinRm"/>
       </label>
-      <button type="submit" class="button-info button-block">登陆</button>
+      <button type="submit" class="button-info button-block" v-on:click.prevent="signin">登陆</button>
     </form>
+    
+    </validator>
     <form id="signup" class="input-group" method="POST" action="/user/signup" v-show="state.signup">
       <label for="uid">账号
         <i class="icon-user"></i>
       </label>
-      <input class="input" type="text" name="uid" id="uid">
+      <input class="input" type="text" name="uid" id="uid" v-model="signupUid">
       <label for="password">密码
         <i class="icon-lock"></i>
       </label>
-      <input class="input" type="password" name="password" id="password">
+      <input class="input" type="password" name="password" id="password" v-model="signupPw">
       <label for="password-repeat">确认密码
         <i class="icon-lock"></i>
       </label>
-      <input class="input" type="password" name="password-repeat" id="password-repeat">
-      <button type="submit" class="button-info button-block">注册</button>
+      <input class="input" type="password" name="password-repeat" id="password-repeat" v-model="signupPwr">
+      <button type="submit" class="button-info button-block" v-on:click="signup">注册</button>
     </form>
   </div>
   <div id="backtotop" v-show="state.scrollTop">
@@ -128,8 +132,7 @@
                   <ul class="list-group">
                     <li class="show-xs">
                       <form action="/search">
-                        <input type="search" placeholder="请输入..." name="kw">
-                        <input type="hidden" placeholder="请输入..." name="page" value=1>
+                        <input type="search" placeholder="请输入..." name="kw" v-model="kw">
                         <button type="submit" class="button searchBtn" v-on:click.prevent="search">
                          <i class="icon-search"></i>
                         </button>
