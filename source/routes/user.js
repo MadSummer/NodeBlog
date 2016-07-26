@@ -177,7 +177,7 @@ router.get('/:uid', (req, res, next) => {
         req.flash('error', err);
         return res.redirect('/');
       }
-      res.render('userpage', {
+      res.render('user', {
         title: user.name + '的个人主页-微博',
         loginUser: req.session.user,
         user: user,

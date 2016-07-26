@@ -46,19 +46,33 @@
           <a href="/tag/css">CSS</a>
         </li>
         <% if(loginUser) { %>
-        <li class="user"><a href="/user/<% loginUser.uid %>"><img src="/assets/images/user_avatar/default.png" alt="">MadSummer.</a></li>
+        <li class="user clearfix" v-on:mouseover="state.sub =! state.sub" v-on:mouseout="state.sub =! state.sub">
+          <a href="/user/<%= loginUser.uid %>">
+            <img src="/assets/images/user_avatar/default.png" alt=""><%= loginUser.name %>
+          </a>
+          <ul class="list-group" v-show="state.sub">
+            <li>
+              <% if(loginUser.group = 'admin'){ %>
+              <a href="/admin">后台管理</a>
+              <% } %>
+            </li>
+            <li>
+              <a href="/user/signout">退出</a>
+            </li>
+          </ul>
+        </li>
         <% } %>
         <% if(!loginUser){ %>
-        <li><a v-on:click="openSign">登陆/注册</a></li>
+        <li><a href="" v-on:click.prevent="openSign">登陆/注册</a></li>
         <% } %>
       </ul>
     </nav>
   </header>
   <header id="mobile-hd">
     <a id="mobile-menu" v-on:click.stop="toggleSidebar"><i class="icon-reorder"></i></a>
-    <a href="/"><img src="/assets/images/logo.png" alt=""></a>
+    <img src="/assets/images/logo.png" alt="">
   </header>
-  <div id="sign" v-show="state.sign">
+  <div id="sign" v-show="state.sign" v-cloak>
     <ul>
       <li v-bind:class="{'current':state.signin}" v-on:click="toggleSign">登陆</li>
       <li v-bind:class="{'current':state.signup}" v-on:click="toggleSign">注册</li>
@@ -111,8 +125,8 @@
             <div class="row">
               <div class="grid-1 side">
                 <aside id="sidebar" v-bind:class="{'open':state.sidebar}">
-                  <ul class="list">
-                    <li class="search">
+                  <ul class="list-group">
+                    <li class="show-xs">
                       <form action="/search">
                         <input type="search" placeholder="请输入..." name="kw">
                         <input type="hidden" placeholder="请输入..." name="page" value=1>
@@ -122,10 +136,10 @@
                       </form>
                     </li>
                     <% if(loginUser) { %>
-                    <li class="user"><a href="/user/<% loginUser.uid %>"><img src="/assets/images/user_avatar/default.png" alt="">MadSummer.</a></li>
+                    <li class="show-xs"><a href="/user/<%= loginUser.uid %>"><img src="/assets/images/user_avatar/default.png" alt=""><%= loginUser.name %></a></li>
                     <% } %>
                     <% if(!loginUser){ %>
-                    <li><a v-on:click="openSign">登陆/注册</a></li>
+                    <li class="show-xs"><a v-on:click="openSign">登陆/注册</a></li>
                     <% } %>
                     <li>
                       <a href="/" class="current">首页</a>
@@ -139,9 +153,11 @@
                     <li>
                       <a href="/">CSS</a>
                     </li>
-                    <li>
+                    <% if (loginUser) { %>
+                    <li class="show-xs">
                       <a href="/user/signout">退出</a>
                     </li>
+                    <% } %>
                   </ul>
                 </aside>
               </div>

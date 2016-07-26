@@ -15,7 +15,7 @@ let sequence = require('gulp-sequence');
 let ap = require('gulp-autoprefixer');
 let del = require('del');
 gulp.task('less', () => {
-  return gulp.src(['./src/less/entry.less', './src/less/header.less', './src/less/index.less', './src/less/article.less', './src/less/userpage.less', './src/less/post.less', './src/less/search.less','./src/less/admin.less'])
+  return gulp.src(['./src/less/entry.less', './src/less/header.less', './src/less/index.less', './src/less/article.less', './src/less/userpage.less', './src/less/post.less', './src/less/search.less','./src/less/userinfo.less','./src/less/entry.less'])
     .pipe(concat('all.less'))
     .pipe(less())
     .pipe(minifyCss())

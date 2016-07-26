@@ -39,7 +39,8 @@ let vm = new Vue({
       sign: false,
       signin: true,
       signup: false,
-      scrollTop: false
+      scrollTop: false,
+      sub:false
     },
     articles: [],
     page: 1,
@@ -104,7 +105,7 @@ let vm = new Vue({
           .then(function (response) {
             let res = response.json();
             if (res.length === 0) {
-              this.state.nomore = true;
+              this.state.none = true;
               this.state.loading = false;
               return;
             }

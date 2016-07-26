@@ -67,7 +67,7 @@ articleSchema.statics.get = function (query, callback) {
     this.model('articles').findByIdAndUpdate(query._id, { '$inc': { 'views': 1 } }, callback);
   }
   if (query.uid) {
-    this.model('articles').find({ uid: query.uid }, callback);
+    this.model('articles').find({ uid: query.uid }, null, { skip: (1 - 1) * 10, limit: 10, sort: { _id: -1 } },callback);
   }
 }
 // 删除文章

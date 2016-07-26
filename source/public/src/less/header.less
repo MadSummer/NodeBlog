@@ -19,7 +19,7 @@
   background-color: #fff;
   @media (max-width:768px){
     display: none;
-  } 
+  }
 }
 #sign{
   width: 80%;
@@ -27,6 +27,7 @@
   height: 350px;
   position: fixed;
   .z-index-higher(10);
+  overflow-x: hidden;
   background-color: @base-color;
   border: 1px solid @theme-color;
   border-radius: 10px;
@@ -47,12 +48,9 @@
     width: 50%;
     cursor: pointer;
   }
-  li:hover{
+  .current{
     background-color: @theme-color;
-  } 
-  .current{  
-    background-color: @theme-color;
-  } 
+  }
 }
 #logo{
   font-size: 2rem;
@@ -69,7 +67,7 @@
 #nav{
   .pull-right;
   margin-right: 60px;
-  li{
+  >ul>li{
     .inline-block;
     margin-right: 8px;
   }
@@ -79,6 +77,28 @@
   }
   a:hover,a.current{
     border-bottom: 3px solid @theme-color;
+  }
+  .user a:hover{
+    border: none;
+  }
+  img{
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  .user{
+    width: 100px;
+    position: relative;
+    background-color: @base-color;
+  }
+  .user ul {
+    position: absolute;
+    width: 100px;
+    background-color: @base-color;
+  }
+  .user:hover{
+    border: none;
   }
 }
 input[type=search]{
@@ -116,11 +136,8 @@ input[type=search]:focus{
   img{
       width: 24px; 
       height: 24px;
-      position: absolute;
-      top: 0;
-      left:50%;
-      margin-left:-12px; 
-      margin-top: 10px;
+      display: block;
+      margin: 0 auto;
     }
   @media (max-width:768px){
     display: block;
@@ -161,11 +178,20 @@ input[type=search]:focus{
   li:hover{
     border-left:2px solid @theme-color;
   }
+  .user:hover{
+    border: none;
+  }
   button{
     position: absolute;
     top: 12px;
     right: 20px;
     left: auto;
+  }
+  img{
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 8px;
   }
   .search,.user{
     display: none;
