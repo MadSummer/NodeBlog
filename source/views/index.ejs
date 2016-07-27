@@ -10,18 +10,22 @@
       <div class="summary" v-text="article.summary"></div>
         <p class="row">
           <span>
-            <a href={{article.userLink}} target="_blank" v-text="article.name">
-              <i class="icon-user"></i>
+            <a href={{article.userLink}} target="_blank">
+              <i class="icon-user"></i>{{article.name}}
             </a>
           </span>
-          <span v-text="article.date">
-            <i class="icon-time"></i>
+          <span>
+            <i class="icon-time"></i>{{article.date}}
           </span>
-          <span v-text="article.views"><i class="icon-eye-open"></i></span>
-          <span v-text="article.comment"><i class="icon-comment"></i></span>
+          <span>
+            <i class="icon-eye-open"></i>{{article.view}}
+          </span>
+          <span>
+            <i class="icon-comment"></i>{{article.comment}}
+            </span>
           <span>
              <i class="icon-tags"></i>
-            <a href="/tags/{{tag}}" v-text="tag+'，'" v-for="tag in article.tags"></a>
+            <a href="/getten?action=tag&page=1&tag={{tag}}" v-text="tag+'  '" v-for="tag in article.tags"></a>
           </span>
           <button class="button-success"><a href="{{article.articleLink}}">阅读全文</a></button>
         </p>

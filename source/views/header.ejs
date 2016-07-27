@@ -89,8 +89,7 @@
         <input class="input" type="text" name="signinuid" id="signinuid" v-model="signinuid" v-validate:signinuid="{required:true}" >
         <label for="signinpsw">密码
           <i class="icon-lock"></i>
-          <span v-if="$signin.signinpsw.required" class="color-danger" >必须填写</span>
-          <span v-if="$signin.signinpsw.minlength" class="color-danger" >密码不低于6位</span>
+          <span v-if="$signin.signinpsw.required" class="color-danger" >必须填写</span> 
         </label>
         <input class="input" type="password" name="signinpsw" id="signinpsw" v-model="signinpsw" v-validate:signinpsw="{required:true,minlength:6}">
         <label for="rember">

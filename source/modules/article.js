@@ -44,15 +44,13 @@ articleSchema.statics.getTen = function (query, callback) {
   let condition = {};
   switch (query.action) {
     case 'index':
-      console.log('action index');
       condition = {};
       break;
     case 'tag':
-      console.log('action tag')
-      condition = {};
+      let tag = new RegExp(query.tag, 'i');
+      condition = {'tags': {$regex: tag}};
       break;
     case 'search':
-      console.log('action search')
       let reg = new RegExp(query.kw, 'i');
       condition = {
         $or: [{ 'title': { $regex: reg } }, { 'content': { $regex: reg } }]
