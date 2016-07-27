@@ -1,23 +1,17 @@
 /*
 @ common
-you might not need jquery:https://github.com/oneuijs/You-Dont-Need-jQuery/blob/master/README.zh-CN.md
+you might not need  jquery:https://github.com/oneuijs/You-Dont-Need-jQuery/blob/master/README.zh-CN.md
 */
 // 定义常用公共函数
 'use strict';
 let Vue = require('vue');
 let common = require('./common');
 let fastClick = require('fastclick');
-const backtotop = document.getElementById('backtotop');
-const sidebar = document.getElementById('sidebar');
 Vue.use(require('vue-resource'));
 Vue.use(require('vue-validator'));
 let vm = new Vue({
   el: '#app',
   data: {
-    els: {
-      'backtotop': backtotop,
-      'sidebar': sidebar,
-    },
     state: {
       mobile: false,
       loading: false,
@@ -30,22 +24,11 @@ let vm = new Vue({
       sub: false
     },
     articles: [],
-    page: 1,
-    kw: '',
-    signinUid: undefined,
-    signinPw: undefined,
-    signUpUid: undefined,
-    signUpPw: undefined,
-    signinRm: undefined,
-    signupPwr: undefined
+    page: 1
   },
   ready: function () {
     // faskclick
     fastClick(document.body);
-    // resize
-    if (document.body.clientWidth < 768) {
-      this.state.sidebar = false;
-    }
     // to top
     window.onscroll = () => {
       // 两者document.documentElement.scrollTop||document.body.scrollTop有一个必定为0
@@ -65,7 +48,7 @@ let vm = new Vue({
       if (this.state.sidebar || this.state.sign || this.state.loading) {
         return true;
       }
-      if (!this.state.sidebar && !this.state.sign && !this.state.loading) {
+      else {
         return false;
       }
     }
@@ -75,22 +58,37 @@ let vm = new Vue({
       this.state.sign = true;
       this.state.sidebar = false;
     },
+    closeMask: function () {
+      this.state.sidebar = false;
+      this.state.sign = false;
+    },
     toggleSign: function (e) {
       if (e.currentTarget.classList.contains('current')) return;
       this.state.signin = !this.state.signin;
       this.state.signup = !this.state.signup;
     },
-    search: () => {
-      if (this.kw.length < 1) return alert('不输入让我搜索啥？');
-      window.location.href = '/search?page=1&kw=' + kw;
+    search: function() {
+      if (!this.kw || this.kw.length < 1) return alert('不输入让我搜索啥？');
+      window.location.href = '/getten?action=search&page=1&kw=' + this.kw;
     },
     signin: function () {
-      if (!this.signinUid && !this.signinPw) return alert('妄想愚弄本夫！');
+      this.$http.post('/user/signin', { 'signinuid': this.signinuid, 'signinpsw': this.signinpsw, 'signinrmb': this.signinrmb })
+        .then(
+        (res) => {
+          window.location.href = window.location.href;
+        }
+        )
+    },
+    signup: function () {
+      this.$http.post('/user/signup', { 'signupuid': this.signupuid, 'signuppsw': this.signuppsw, 'passwordre': this.passwordre, 'signupum': this.signupum })
+        .then((res) => {
+          window.location.href = window.location.href;
+        })
     },
     load: function () {
       if (window.location.pathname === '/' && !this.loading) {
         this.state.loading = true;
-        this.$http.get('/load', { params: { 'page': this.page } })
+        this.$http.get('/getten', { params: { 'action': 'index', 'page': this.page, } })
           .then(function (response) {
             let res = response.json();
             if (res.length === 0) {
@@ -113,6 +111,7 @@ let vm = new Vue({
               tempDiv.innerHTML = content;
               let summary = tempDiv.textContent.slice(0, 80);
               let cover = tempDiv.querySelector('img') && tempDiv.querySelector('img').getAttribute('src') || '/assets/images/cover.jpg';
+              let tags = res[i].tags && res[i].tags.replace(/\s+/g, '|').split('|') ||['vue','js'];
               this.articles.push({
                 title,
                 content,
@@ -124,7 +123,8 @@ let vm = new Vue({
                 userLink,
                 articleLink,
                 summary,
-                cover
+                cover,
+                tags
               });
             }
             this.state.loading = false;

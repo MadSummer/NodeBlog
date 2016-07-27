@@ -35,31 +35,36 @@ let upload = multer({
 });
 // 登陆
 router.post('/signin', (req, res, next) => {
-  userModel.get(req.body.uid, (err, user) => {
+  if (!req.body.signinuid || !req.body.signinpsw) {
+    req.flash('error', '不能为空');
+    return res.send();
+  }
+  userModel.get(req.body.signinuid, (err, user) => {
     if (err) {
-      req.flash('error', err)
+      req.flash('error', err);
+      return res.send()
     }
-    let md5 = crypto.createHash('md5'),
-      password = md5.update(req.body.password).digest('hex');
     if (!user) {
       req.flash('error', '用户不存在');
-      res.redirect('/');
+      return res.send();
     }
-    else if (password === user.password) {
+    let md5 = crypto.createHash('md5'),
+      password = md5.update(req.body.signinpsw).digest('hex');
+    if (password !== user.password) {
+      req.flash('error', '密码错误，请重新输入！');
+      return res.send();
+    }
+    if (password === user.password) {
       req.flash('success', '登陆成功');
       req.session.user = user;
-      res.redirect('/');
-    }
-    else {
-      req.flash('error', '密码错误，请重新输入！');
-      res.redirect('/');
+      res.send('/');
     }
     // rember me
-    if (req.body.rember) {
+    if (req.body.signinrmb) {
       req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30;
       req.session.save();
     }
-    if (!req.body.rember) {
+    if (!req.body.signinrmb) {
       req.session.cookie.expires = false;
       req.session.cookie.maxAge = null;
       req.session.save();
@@ -67,47 +72,48 @@ router.post('/signin', (req, res, next) => {
   });
 })
 // 用户注册
-router.post('/signup', (req, res) => {
-  let uid = req.body.uid;
-  let name = req.body.username;
-  let password = req.body.password;
-  let password_re = req.body['password-repeat'];
+router.post('/signup', (req, res, next) => {
+  let uid = req.body.signupuid;
+  let name = req.body.signupum;
+  let password = req.body.signuppsw;
+  let password_re = req.body.passwordre;
   if (!(uid && name && password)) {
     req.flash('error', '不能为空!');
-    return res.redirect('/');//返回注册页
+    return res.send();//返回注册页
   }
   //检验用户两次输入的密码是否一致
   if (password_re != password) {
     req.flash('error', '两次输入的密码不一致!');
-    return res.redirect('/');//返回注册页
+    return res.send();//返回注册页
   }
-  //生成密码的 md5 值
-  let md5 = crypto.createHash('md5');
-  password = md5.update(req.body.password).digest('hex');
-  let newUser = new userModel({
-    uid: uid,
-    name: name,
-    password: password,
-  });
   //检查账户是否已经存在 
-  userModel.get(newUser.uid, (err, user) => {
+  userModel.get(uid, (err, user) => {
     if (err) {
       req.flash('error', err);
-      return res.redirect('/');
+      return res.send();
     }
     if (user) {
       req.flash('error', '用户已存在!');
-      return res.redirect('/');//返回注册页
+      return res.send();//返回注册页
     }
+    //生成密码的 md5 值
+    let md5 = crypto.createHash('md5');
+    password = md5.update(password).digest('hex');
+    let newUser = new userModel({
+      uid: uid,
+      name: name,
+      password: password,
+      group: 'user',
+    });
     //如果不存在则新增用户
     newUser.save((err, user) => {
       if (err) {
         req.flash('error', err);
-        return res.redirect('/reg');//注册失败返回主册页
+        return res.send();//注册失败返回主册页
       }
       req.session.user = newUser;//用户信息存入 session
       req.flash('success', '注册成功!');
-      res.redirect('/');//注册成功后返回主页
+      res.send();//注册成功后返回主页
     });
   });
 });

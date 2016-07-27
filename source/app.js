@@ -17,6 +17,7 @@ let settings = require('./settings');
 let index = require('./routes/index');
 let article = require('./routes/article');
 let user = require('./routes/user');
+let getTen = require('./routes/getTen');
 let search = require('./routes/search');
 let admin = require('./routes/admin');
 /*实例化app为一个express应用*/
@@ -49,6 +50,7 @@ app.use('/user', user);
 app.use('/article', article);
 app.use('/search', search);
 app.use('/admin', admin);
+app.use('/getten',getTen);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   let err = new Error('Not Found');

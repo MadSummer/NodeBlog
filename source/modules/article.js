@@ -22,7 +22,7 @@ let articleSchema = mongoose.Schema({
   name: String,
   comment: [commentSchema],
   views: Number,
-  tags:Array
+  tags: String
 });
 // 删除评论
 articleSchema.methods.removeComment = function (i, callback) {
@@ -39,27 +39,29 @@ articleSchema.methods.pushComment = function (comment, callback) {
   this.comment.push(newComment);
   this.save(callback);
 }
-// 批量插入数据
-
-// 文章搜索
-articleSchema.statics.search = function (kw, page, callback) {
-  let reg = new RegExp(kw, 'i');
-  this.model('articles').find(
-    {
-      $or: [{ 'title': { $regex: reg } }, { 'content': { $regex: reg } }]
-    },
-    null,
-    {
-      skip: (page - 1) * 10,
-      limit: 10,
-      sort: { _id: -1 }
-    },
-    callback
-  )
-}
-// 首页加载
-articleSchema.statics.load = function (page, callback) {
-  this.model('articles').find({}, null, { skip: (page - 1) * 10, limit: 10, sort: { _id: -1 } }, callback);
+// 加载10篇文章
+articleSchema.statics.getTen = function (query, callback) {
+  let condition = {};
+  switch (query.action) {
+    case 'index':
+      console.log('action index');
+      condition = {};
+      break;
+    case 'tag':
+      console.log('action tag')
+      condition = {};
+      break;
+    case 'search':
+      console.log('action search')
+      let reg = new RegExp(query.kw, 'i');
+      condition = {
+        $or: [{ 'title': { $regex: reg } }, { 'content': { $regex: reg } }]
+      }
+      break;
+    default:
+      break;
+  }
+  this.model('articles').find(condition, null, { skip: (query.page - 1) * 10, limit: 10, sort: { _id: -1 } }, callback);
 }
 // 得到一篇文章或者用户所有文章
 articleSchema.statics.get = function (query, callback) {
@@ -67,7 +69,7 @@ articleSchema.statics.get = function (query, callback) {
     this.model('articles').findByIdAndUpdate(query._id, { '$inc': { 'views': 1 } }, callback);
   }
   if (query.uid) {
-    this.model('articles').find({ uid: query.uid }, null, { skip: (1 - 1) * 10, limit: 10, sort: { _id: -1 } },callback);
+    this.model('articles').find({ uid: query.uid }, null, { skip: (1 - 1) * 10, limit: 10, sort: { _id: -1 } }, callback);
   }
 }
 // 删除文章

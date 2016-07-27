@@ -19,6 +19,10 @@
           </span>
           <span v-text="article.views"><i class="icon-eye-open"></i></span>
           <span v-text="article.comment"><i class="icon-comment"></i></span>
+          <span>
+             <i class="icon-tags"></i>
+            <a href="/tags/{{tag}}" v-text="tag+'，'" v-for="tag in article.tags"></a>
+          </span>
           <button class="button-success"><a href="{{article.articleLink}}">阅读全文</a></button>
         </p>
       </div>

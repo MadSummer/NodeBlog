@@ -24,7 +24,6 @@
 #sign{
   width: 80%;
   max-width: 500px;
-  height: 350px;
   position: fixed;
   .z-index-higher(10);
   overflow-x: hidden;
@@ -91,11 +90,14 @@
     width: 100px;
     position: relative;
     background-color: @base-color;
+    padding: 5px;
   }
   .user ul {
     position: absolute;
     width: 100px;
+    left: 0;
     background-color: @base-color;
+    padding: 5px;
   }
   .user:hover{
     border: none;

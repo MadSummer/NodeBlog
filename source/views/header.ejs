@@ -26,7 +26,7 @@
       <ul>
         <li class="search">
           <form action="/search">
-            <input type="search" placeholder="请输入..." name="kw" v-bind:value = "kw">
+            <input type="search" placeholder="请输入..." name="kw" v-model="kw">
             <button type="submit" class="button searchBtn" v-on:click.prevent="search">
               <i class="icon-search"></i>
             </button>
@@ -36,7 +36,7 @@
           <a href="/" class="current">首页</a>
         </li>
         <li>
-          <a href="/tag/node">Node</a>
+          <a href="/getten?action=tag&page=1&tags=node">Node</a>
         </li>
         <li>
           <a href="/tage/js">JS</a>
@@ -50,6 +50,9 @@
             <img src="/assets/images/user_avatar/default.png" alt=""><%= loginUser.name %>
           </a>
           <ul class="list-group" v-show="state.sub">
+            <li>
+              <a href="/user/publish">发布文章</a>
+            </li>
             <li>
               <% if(loginUser.group = 'admin'){ %>
               <a href="/admin">后台管理</a>
@@ -77,40 +80,53 @@
       <li v-bind:class="{'current':state.signup}" v-on:click="toggleSign">注册</li>
     </ul>
     
-    <validator name="validationl">
-    <form id="signin"  class="input-group" method="POST" action="/user/signin" v-show="state.signin">
-      <label for="uid">账号
-        <i class="icon-user"></i>
-      </label>
-      <input class="input" type="text" name="uid" id="uid"  v-model="signinUid" v-validate:signinUid="{requires:true}">
-        <p v-if="$validationl.signinUid.required" class="alert-danger" data-key="test">错误啦</p>
-      <label for="password">密码
-        <i class="icon-lock"></i>
-      </label>
-      <input class="input" type="password" name="password" id="password" v-model="signinPw">
-      <label for="rember">
-        记住我
-        <input id="rember" name="rember" type="checkbox" checked v-model="signinRm"/>
-      </label>
-      <button type="submit" class="button-info button-block" v-on:click.prevent="signin">登陆</button>
-    </form>
-    
+    <validator name="signin" >
+      <form id="signin" class="input-group" v-show="state.signin" novalidate v-on:submit.prevent="signin">
+        <label for="signinuid">账号
+          <i class="icon-user"></i>
+           <span v-if="$signin.signinuid.required" class="color-danger" >必须填写</span>
+        </label>
+        <input class="input" type="text" name="signinuid" id="signinuid" v-model="signinuid" v-validate:signinuid="{required:true}" >
+        <label for="signinpsw">密码
+          <i class="icon-lock"></i>
+          <span v-if="$signin.signinpsw.required" class="color-danger" >必须填写</span>
+          <span v-if="$signin.signinpsw.minlength" class="color-danger" >密码不低于6位</span>
+        </label>
+        <input class="input" type="password" name="signinpsw" id="signinpsw" v-model="signinpsw" v-validate:signinpsw="{required:true,minlength:6}">
+        <label for="rember">
+          记住我
+          <input id="rember" name="rember" type="checkbox" checked v-model="signinrmb"/>
+        </label>
+        <button type="submit" class="button-primary button-block" v-bind:disabled="!$signin.valid" >登陆</button>
+      </form>
     </validator>
-    <form id="signup" class="input-group" method="POST" action="/user/signup" v-show="state.signup">
-      <label for="uid">账号
-        <i class="icon-user"></i>
-      </label>
-      <input class="input" type="text" name="uid" id="uid" v-model="signupUid">
-      <label for="password">密码
-        <i class="icon-lock"></i>
-      </label>
-      <input class="input" type="password" name="password" id="password" v-model="signupPw">
-      <label for="password-repeat">确认密码
-        <i class="icon-lock"></i>
-      </label>
-      <input class="input" type="password" name="password-repeat" id="password-repeat" v-model="signupPwr">
-      <button type="submit" class="button-info button-block" v-on:click="signup">注册</button>
-    </form>
+    <validator name="signup">
+      <form id="signup" class="input-group" v-show="state.signup" novalidate v-on:submit.prevent="signup">
+        <label for="signupuid">账号
+          <i class="icon-user"></i>
+          <span v-if="$signup.signupuid.required" class="color-danger" >必须填写</span>
+        </label>
+        <input class="input" type="text" name="signupuid" id="signupuid" v-model="signupuid" v-validate:signupuid="{required:true}">
+        <label for="signupuid">昵称
+          <i class="icon-home"></i>
+          <span v-if="$signup.signupum.required" class="color-danger">必须填写</span>
+        </label>
+        <input class="input" type="text" name="signupum" id="signupum" v-model="signupum" v-validate:signupum="{required:true}">
+        <label for="signuppsw">密码
+          <i class="icon-lock"></i>
+          <span v-if="$signup.signuppsw.required" class="color-danger" >必须填写</span>
+          <span v-if="$signup.signuppsw.minlength" class="color-danger" >密码长度不小于6位</span>
+        </label>
+        <input class="input" type="password" name="signuppsw" id="signuppsw" v-model="signuppsw" v-validate:signuppsw="{required:true,minlength:6}">
+        <label for="passwordre">确认密码
+          <i class="icon-lock"></i>
+          <span v-if="$signup.passwordre.required" class="color-danger" >必须填写</span>
+          <span v-if="signuppsw!=passwordre" class="color-danger" >密码不相同</span>
+        </label>
+        <input class="input" type="password" name="passwordre" id="passwordre" v-model="passwordre" v-validate:passwordre="{required:true,minlength:6}">
+        <button type="submit" class="button-primary button-block" v-bind:disabled="!$signup.valid" >注册</button>
+      </form>
+	</validator>
   </div>
   <div id="backtotop" v-show="state.scrollTop">
     <a href="#app"><i class=" icon-arrow-up"></i></a>
