@@ -36,13 +36,19 @@
           <a href="/" class="current">首页</a>
         </li>
         <li>
-          <a href="/getten?action=tag&page=1&tags=node">Node</a>
+          <a href="/getten?action=tag&tag=node&page=1">Node</a>
         </li>
         <li>
-          <a href="/tage/js">JS</a>
+          <a href="/getten?action=tag&tag=vue&page=1">Vue</a>
         </li>
         <li>
-          <a href="/tag/css">CSS</a>
+          <a href="/getten?action=tag&tag=jquery&page=1">jQuery</a>
+        </li>
+        <li>
+          <a href="/getten?action=tag&tag=js&page=1">JS</a>
+        </li>
+        <li>
+          <a href="/getten?action=tag&tag=css&page=1">CSS</a>
         </li>
         <% if(loginUser) { %>
         <li class="user clearfix" v-on:mouseover="state.sub =! state.sub" v-on:mouseout="state.sub =!state.sub">
@@ -163,13 +169,19 @@
                       <a href="/" class="current">首页</a>
                     </li>
                     <li>
-                      <a href="/">Node</a>
+                      <a href="/getten?action=tag&tag=node&page=1">Node</a>
                     </li>
                     <li>
-                      <a href="/ ">JS</a>
+                      <a href="/getten?action=tag&tag=vue&page=1">Vue</a>
                     </li>
                     <li>
-                      <a href="/">CSS</a>
+                      <a href="/getten?action=tag&tag=jquery&page=1">jQuery</a>
+                    </li>
+                    <li>
+                      <a href="/getten?action=tag&tag=js&page=1">JS</a>
+                    </li>
+                    <li>
+                      <a href="/getten?action=tag&tag=css&page=1">CSS</a>
                     </li>
                     <% if (loginUser) { %>
                     <li class="show-xs">

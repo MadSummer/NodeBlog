@@ -10,11 +10,11 @@ let common = {
     let second = stamp.getSeconds();
     if (second < 10) {
       second = '0' + second;
-    } 
+    }
     if (minute < 10) {
       minute = '0' + minute;
     }
-    if (hour < 10) { 
+    if (hour < 10) {
       hour = '0' + hour;
     }
     switch (format) {
@@ -23,6 +23,16 @@ let common = {
       case 3: return year + '/' + month + '/' + day + '/' + hour + '/' + minute + '/' + second;
       default: return year + '年' + month + '月' + day + '日' + hour + '时' + minute + '分' + second + '秒';
     }
+  },
+  getQ: (params) => {
+    let reg = new RegExp("(^|&)" + params + "=([^&]*)(&|$)", "i");
+    let r = window.location.search.substr(1).match(reg);  //获取url中"?"符后的字符串并正则匹配
+    let context = "";
+    if (r != null)
+      context = r[2];
+    reg = null;
+    r = null;
+    return context == null || context == "" || context == "undefined" ? "" : context;
   }
 }
 module.exports = common;

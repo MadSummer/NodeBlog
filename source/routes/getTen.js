@@ -25,7 +25,8 @@ router.get('/', (req, res, next) => {
           error: req.flash('error').toString(),
           success: req.flash('success').toString(),
           article: article,
-          kw: query.kw
+          kw: query.kw,
+          tag: undefined
         });
         break;
       case 'tag':
@@ -35,10 +36,13 @@ router.get('/', (req, res, next) => {
           error: req.flash('error').toString(),
           success: req.flash('success').toString(),
           article: article,
-          tag:query.tag
+          tag: query.tag,
+          kw: undefined
         });
         break;
       default:
+        req.flash('error', '地址出现了一点点小问题');
+        res.redirect('/')
         break;
     }
   });

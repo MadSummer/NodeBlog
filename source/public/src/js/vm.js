@@ -29,6 +29,8 @@ let vm = new Vue({
   ready: function () {
     // index first load
     this.load();
+    // get page 
+    this.page = +common.getQ('page') || 1;
     // faskclick
     fastClick(document.body);
     // to top

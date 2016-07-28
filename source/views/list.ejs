@@ -1,9 +1,9 @@
 <% include header %>
-  <% if(typeof tag === 'defined' ){ %>
-  <p class="text-center alert alert-info">搜索<span class="clor-danger"><%= kw %></span>的结果</p>
+  <% if(typeof tag === 'undefined' ){ %>
+  <p class="text-center alert alert-info">搜索<span class="color-danger"><%= kw %></span>的结果</p>
   <% } %>
-  <% if(typeof kw === 'defined'){ %>
-  <h3 class="text-center alert alert-info"><span class="clor-danger"><%= kw %></span>的相关文章</h3>
+  <% if(typeof kw === 'undefined'){ %>
+  <h3 class="text-center alert alert-info"><span class="color-danger"><%= tag %></span>的相关文章</h3>
   <% } %>
   <ul class="list-group">
     <% article.forEach(function(article){ %>
@@ -13,13 +13,28 @@
       <% }) %>
   </ul>
   <ul class="list-group page">
-    <li><a href="">首页</a></li>
-    <li><a href="/getten?page={{page}}&">1</a></li>
-    <li><a href="">2</a></li>
-    <li><a href="">3</a></li>
-    <li><a href="">4</a></li>
-    <li><a href="">5</a></li>
-    <li><a href="">尾页</a></li>
+    <% if(typeof tag === 'undefined' ){ %>
+    <li v-if="page>1"><a href="/getten?action=search&kw=<%= kw %>&page={{page-1}}">上一页</a></li>
+    <li v-if="page>=3"><a href="/getten?action=search&kw=<%= kw %>&page={{page-2}}">{{page-2}}</a></li>
+    <li v-if="page>=3"><a href="/getten?action=search&kw=<%= kw %>&page={{page-1}}">{{page-1}}</a></li>
+    <li class="color-info"><a href="/getten?action=search&kw=<%= kw %>&page={{page}}">{{page}}</a></li>
+    <li><a href="/getten?action=search&kw=<%= kw %>&page={{page+1}}">{{page+1}}</a></li>
+    <li><a href="/getten?action=search&kw=<%= kw %>&page={{page+2}}">{{page+2}}</a></li>
+    <li v-if="page<3"><a href="/getten?action=search&kw=<%= kw %>&page={{page+3}}">{{page+3}}</a></li>
+    <li v-if="page<3"><a href="/getten?action=search&kw=<%= kw %>&page={{page+4}}">{{page+4}}</a></li>
+    <li><a href="/getten?action=search&kw=<%= kw %>&page={{page+1}}">下一页</a></li>
+    <% } %>
+    <% if(typeof kw === 'undefined' ){ %>
+    <li v-if="page>1"><a href="/getten?action=tag&tag=<%= tag %>&page={{page-1}}">上一页</a></li>
+    <li v-if="page>=3"><a href="/getten?action=tag&tag=<%= tag %>&page={{page-2}}">{{page-2}}</a></li>
+    <li v-if="page>=3"><a href="/getten?action=tag&tag=<%= tag %>&page={{page-1}}">{{page-1}}</a></li>
+    <li class="color-info"><a href="/getten?action=tag&tag=<%= tag %>&page={{page}}">{{page}}</a></li>
+    <li><a href="/getten?action=tag&tag=<%= tag %>&page={{page+1}}">{{page+1}}</a></li>
+    <li><a href="/getten?action=tag&tag=<%= tag %>&page={{page+2}}">{{page+2}}</a></li>
+    <li v-if="page<3"><a href="/getten?action=tag&tag=<%= tag %>&page={{page+3}}">{{page+3}}</a></li>
+    <li v-if="page<3"><a href="/getten?action=tag&tag=<%= tag %>&page={{page+4}}">{{page+4}}</a></li>
+    <li><a href="/getten?action=tag&tag=<%= tag %>&page={{page+1}}">下一页</a></li>
+    <% } %>
   </ul>
   </div>
   </div>
