@@ -8,7 +8,7 @@
         <a href={{article.articleLink}} target="_blank" v-text="article.title"></a>
       </header>
       <div class="summary" v-text="article.summary"></div>
-        <p class="row">
+        <p class="info">
           <span>
             <a href={{article.userLink}} target="_blank">
               <i class="icon-user"></i>{{article.name}}
@@ -18,7 +18,7 @@
             <i class="icon-time"></i>{{article.date}}
           </span>
           <span>
-            <i class="icon-eye-open"></i>{{article.view}}
+            <i class="icon-eye-open"></i>{{article.views}}
           </span>
           <span>
             <i class="icon-comment"></i>{{article.comment}}

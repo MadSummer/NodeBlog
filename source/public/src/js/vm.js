@@ -24,9 +24,11 @@ let vm = new Vue({
       sub: false
     },
     articles: [],
-    page: 1
+    page: 1,
   },
   ready: function () {
+    // index first load
+    this.load();
     // faskclick
     fastClick(document.body);
     // to top
@@ -40,8 +42,12 @@ let vm = new Vue({
         this.scrollTop = false;
       }
     }
-    // index first load
-    this.load();
+    if (typeof wangEditor !== 'undefined' || typeof jQuery !== 'undefined') {
+      let editor = new wangEditor('editor');
+      editor.config.uploadImgFileName= 'uploadfile'
+      editor.config.uploadImgUrl = './publish/upload';
+      editor.create();
+    }
   },
   computed: {
     mask: function () {
@@ -67,7 +73,7 @@ let vm = new Vue({
       this.state.signin = !this.state.signin;
       this.state.signup = !this.state.signup;
     },
-    search: function() {
+    search: function () {
       if (!this.kw || this.kw.length < 1) return alert('不输入让我搜索啥？');
       window.location.href = '/getten?action=search&page=1&kw=' + this.kw;
     },
@@ -83,6 +89,12 @@ let vm = new Vue({
       this.$http.post('/user/signup', { 'signupuid': this.signupuid, 'signuppsw': this.signuppsw, 'passwordre': this.passwordre, 'signupum': this.signupum })
         .then((res) => {
           window.location.href = window.location.href;
+        })
+    },
+    publish: function () {
+      this.$http.post('/user/publish/submit', { 'title': this.title, 'content': document.getElementById('editor').value, 'tags': this.tags })
+        .then((res) => {
+          window.location.href = '/article/' + res.json();
         })
     },
     load: function () {
@@ -111,7 +123,7 @@ let vm = new Vue({
               tempDiv.innerHTML = content;
               let summary = tempDiv.textContent.slice(0, 80);
               let cover = tempDiv.querySelector('img') && tempDiv.querySelector('img').getAttribute('src') || '/assets/images/cover.jpg';
-              let tags = res[i].tags && res[i].tags.replace(/\s+/g, '|').split('|') ||['vue','js'];
+              let tags = res[i].tags && res[i].tags.replace(/\s+/g, '|').split('|') || ['vue', 'js'];
               this.articles.push({
                 title,
                 content,

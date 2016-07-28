@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>发布文章</title>
-</head>
-<body>
-  
-</body>
-</html>
+<% include header %>
+<link rel="stylesheet" href="/dest/stylesheets/all.min.css">
+<link rel="stylesheet" href="/dest/stylesheets/wangEditor.min.css">
+  <h2>发布文章</h2>
+  <validator name="publish">
+    <form class="input-group" novalidate v-on:submit.prevent="publish">
+      <label for="title">文章标题</label>
+      <span class="color-danger" v-if="$publish.title.required">必须填写</span>
+      <span class="color-danger" v-if="$publish.title.maxlength">不得超过20字符</span>
+      <input type="text" name="title" id="title" class="input" v-model="title" v-validate:title="{required:true,maxlength:20}">
+      <label for="content">文章内容</label>
+      <textarea name="content"  id="editor"  class="input"></textarea>
+      <label for="tags">标签</label>
+      <input name="tags" id="tags" class="input" placeholder="用空格隔开" v-model="tags"></input>
+      <button class="button-block button-primary" type="submit" v-bind:disabled="!$publish.valid" >发布</button>
+    </form>
+  </validator>
+  <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+  <script src="/dest/javascripts/wangEditor.min.js"></script>
+  <script src="/dest/javascripts/publish.js"></script>
+  </div>
+  </div>
+  </div>
+<% include footer %>

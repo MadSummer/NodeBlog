@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
         res.send(article);
         break;
       case 'search':
-        res.render('search', {
+        res.render('list', {
           title: '搜索' + query.kw + '的结果',
           loginUser: req.session.user,
           error: req.flash('error').toString(),
@@ -29,7 +29,7 @@ router.get('/', (req, res, next) => {
         });
         break;
       case 'tag':
-        res.render('tag', {
+        res.render('list', {
           title: query.tag + '的所有文章',
           loginUser: req.session.user,
           error: req.flash('error').toString(),

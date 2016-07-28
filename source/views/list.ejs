@@ -1,8 +1,13 @@
 <% include header %>
+  <% if(typeof tag === 'defined' ){ %>
   <p class="text-center alert alert-info">搜索<span class="clor-danger"><%= kw %></span>的结果</p>
+  <% } %>
+  <% if(typeof kw === 'defined'){ %>
+  <h3 class="text-center alert alert-info"><span class="clor-danger"><%= kw %></span>的相关文章</h3>
+  <% } %>
   <ul class="list-group">
     <% article.forEach(function(article){ %>
-      <li class="list-group-item">
+      <li>
         <a href="/article/<%= article._id %>"><%= article.title %></a>
       </li>
       <% }) %>

@@ -11,7 +11,7 @@ let app = require('../app');
 let storage = multer.diskStorage({
   destination: function (req, file, callback) {
     let today = common.FormatDate(new Date(), 4);
-    let path = './upload/data/' + today;
+    let path = '../upload/data/' + today;
     fs.exists(path, (exists) => {
       if (exists) {
         callback(null, path);
@@ -138,6 +138,9 @@ router.get('/publish', (req, res, next) => {
 });
 router.post('/publish/upload', upload.array('uploadfile', 1), function (req, res) {
   let destination = req.files[0].destination.slice(9) + '/';
+  console.log(req.files[0].destination)
+  console.log(destination)
+  console.log(req.files[0].filename)
   res.send(destination + req.files[0].filename)
 });
 router.post('/publish/submit', (req, res, next) => {
@@ -145,6 +148,9 @@ router.post('/publish/submit', (req, res, next) => {
     req.flash('error', '请先登录！');
     return res.send(null);
   }
+  console.log(req.body.title)
+  console.log(req.body.content)
+  console.log(req.body.tags)
   if (req.body.title.length < 1 || req.body.content.length < 1) {
     req.flash('error', '不能为空');
     return res.send(null);
