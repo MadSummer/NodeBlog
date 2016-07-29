@@ -9,6 +9,10 @@ let common = require('./common');
 let fastClick = require('fastclick');
 Vue.use(require('vue-resource'));
 Vue.use(require('vue-validator'));
+Vue.validator('email', function (val) {
+  return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(val)
+})
+
 let vm = new Vue({
   el: '#app',
   data: {
@@ -46,7 +50,7 @@ let vm = new Vue({
     }
     if (typeof wangEditor !== 'undefined' || typeof jQuery !== 'undefined') {
       let editor = new wangEditor('editor');
-      editor.config.uploadImgFileName= 'uploadfile'
+      editor.config.uploadImgFileName = 'uploadfile'
       editor.config.uploadImgUrl = './publish/upload';
       editor.create();
     }
@@ -99,6 +103,28 @@ let vm = new Vue({
           window.location.href = '/article/' + res.json();
         })
     },
+    pushComment: function () {
+      this.$http.post('./pushComment', { 'commentname': this.commentname || null, 'commentemail': this.commentemail || null, 'commentcontent': this.commentcontent, 'pid': document.getElementsByClassName('article')[0].getAttribute('data-pid') })
+        .then((res) => {
+          window.location.href = window.location.href;
+        });
+    },
+    delComment: function (e) {
+      this.$http.post('./delComment',
+        {
+          'pid': document.getElementsByClassName('article')[0].getAttribute('data-pid'),
+          'cid': e.currentTarget.getAttribute('data-cid')
+        })
+        .then((res) => {
+          window.location.href = window.location.href;
+        })
+    },
+    delArticle: function (e) {
+      this.$http.post('./delArticle', { 'pid': e.currentTarget.getAttribute('data-pid') })
+        .then((res) => {
+          window.location.href = '/';
+        });
+    },
     load: function () {
       if (window.location.pathname === '/' && !this.loading) {
         this.state.loading = true;
@@ -119,7 +145,7 @@ let vm = new Vue({
               let date = common.formatDate(pid, 2);
               let views = res[i].views;
               let comment = res[i].comment.length;
-              let userLink = '/u/' + res[i].uid;
+              let userLink = '/user/' + res[i].uid;
               let articleLink = '/article/' + pid;
               let tempDiv = document.createElement('div')
               tempDiv.innerHTML = content;

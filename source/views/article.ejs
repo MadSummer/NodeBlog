@@ -24,30 +24,47 @@
         <a href="/getten?action=tag&page=1&tag=<%= tag %>"><%= tag %> </a>
         <% }) %>
       </span>
+      <% if( loginUser && (loginUser.uid===article.uid || loginUser.group === 'admin') ){ %>
+      <span><a v-on:click="delArticle" data-pid="<%= article._id %>"><i class="icon-remove"></i>删除</a></span>
+      <% } %>
     </p>
-    <div class="content lh-hg">
+    <div class="content">
       <%- article.content %>
     </div>
   </article>
-  <hr/>
   <h2>评论</h2>
-
-  <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="<%= article._id %>" data-title="<%= article.title %>" data-url="/p/<%= article._id %>"></div>
-  <!-- 多说评论框 end -->
-  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-  <script type="text/javascript">
-var duoshuoQuery = {short_name:"z-blog-xhttkl"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-  <!-- 多说公共JS代码 end -->
+  <validator name="comment">
+    <form novalidate v-on:submit.prevent="pushComment">
+      <% if(!loginUser){ %>
+      <p>
+        <span class="color-danger" v-if="$comment.commentname.required">必须填写姓名</span>
+        <span class="color-danger" v-if="$comment.commentname.maxlength">名字太长啦</span>
+        <span class="color-danger" v-if="$comment.commentemail.required">必须填写邮箱</span>
+        <span class="color-danger" v-if="$comment.commentemail.email">邮箱格式不正确</span>
+      </p>
+      <label for="commentname" >姓名</label>
+      <input type="text" class="mr10" name="commentname" id="commentname" v-model="commentname" v-validate:commentname="{required:true,maxlength:10}">
+      <label for="commentemail">邮箱(不会公开)</label>
+      <input type="email" class="mr10" name="commentemail" id="commentemail" v-model="commentemail" v-validate:commentemail="{required:true,email:true}">
+      <% } %>
+      <textarea name="commentcontent" id="commentcontent" cols="30" rows="4" class="block" placeholder="写下你的评论，文明发言" v-model="commentcontent" v-validate:commentcontent="{required:true}"></textarea>
+      <button type="submit" class="button-primary button-block" v-bind:disabled="!$comment.valid">提交</button> 
+    </form>
+  </validator>
+    <% article.comment.forEach(function(comment){ %>
+    <div class="comment row">
+      <div class="grid-1">
+        <img src="/assets/images/user_avatar/default.png" alt="">
+        <span> 
+          <a  <% if (comment.uid){ %> href="/user/<%= comment.uid %>"  <% } %> ><%= comment.name %></a>
+        </span>
+      </div>
+      <div class="grid-4"><%= comment.content %></div>
+      <% if(loginUser && (loginUser.uid==comment.uid || loginUser.group === 'admin' )){ %>
+      <div class="grid-1"><a v-on:click="delComment" data-cid="<%= comment._id %>"><i class="icon-remove"></i>删除</a></div>
+      <% } %>
+    </div>
+    <% }) %>
   </div>
   </div>
   </div>

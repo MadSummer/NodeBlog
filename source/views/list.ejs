@@ -8,10 +8,35 @@
   <ul class="list-group">
     <% article.forEach(function(article){ %>
       <li>
-        <a href="/article/<%= article._id %>"><%= article.title %></a>
+        <h3><a href="/article/<%= article._id %>"><%= article.title %></a></h3>
+        <p class="summary"><%= article.content.slice(0,70) %>......</p>
+        <p class="info">
+          <span>
+            <a href="/article/<%= article._id %>" target="_blank">
+              <i class="icon-user"></i><%= article.name %>
+            </a>
+          </span>
+          <span>
+            <i class="icon-time"></i><%= formatDate(article._id,2) %>
+          </span>
+          <span>
+            <i class="icon-eye-open"></i><%= article.views %>
+          </span>
+          <span>
+            <i class="icon-comment"></i><%= article.comment.length %>
+            </span>
+          <span>
+             <i class="icon-tags"></i>
+             <% (article.tags||'').replace(/\s+/g,'|').split('|').forEach(function(tag){ %>
+            <a href="/getten?action=tag&tag=<%= tag %>&page=1"><%= tag %></a>
+            <% }) %>
+          </span>
+          <button class="button-success"><a href="{{article.articleLink}}">阅读全文</a></button>
+        </p>
       </li>
       <% }) %>
   </ul>
+  <% if(article.length>=10){ %>
   <ul class="list-group page">
     <% if(typeof tag === 'undefined' ){ %>
     <li v-if="page>1"><a href="/getten?action=search&kw=<%= kw %>&page={{page-1}}">上一页</a></li>
@@ -36,6 +61,7 @@
     <li><a href="/getten?action=tag&tag=<%= tag %>&page={{page+1}}">下一页</a></li>
     <% } %>
   </ul>
+  <% } %>
   </div>
   </div>
   </div>

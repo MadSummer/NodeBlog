@@ -27,7 +27,7 @@ router.post('/delArticle', (req, res, next) => {
       req.flash('error', err);
       return res.redirect('/');
     }
-    if (article.uid === req.session.user.uid || req.session.user.gropu==='admin') {
+    if (article.uid === req.session.user.uid || req.session.user.gropu === 'admin') {
       articleModel.removeArticle(req.body.pid, (err, article) => {
         req.flash('success', '删除成功');
         res.send('success');
@@ -37,14 +37,15 @@ router.post('/delArticle', (req, res, next) => {
 });
 
 router.post('/pushComment', (req, res, next) => {
-  if (!req.session.user) {
-    req.flash('error', '登陆用户才能评论！');
-    return res.send({ 'success': 'notLogin' });
+  if (!req.body.commentcontent || !(req.session.user || (req.body.commentname && req.body.commentemail))) {
+    req.flash('error', '不能为空')
+    return;
   }
   let comment = {
-    uid: req.session.user.uid,
-    name: req.session.user.name,
-    content: req.body.content
+    uid: req.session.user && req.session.user.uid || null,
+    name: req.session.user && req.session.user.name || req.body.commentname,
+    content: req.body.commentcontent,
+    email: req.body.commentemail
   }
   articleModel.get({ _id: req.body.pid }, (err, article) => {
     if (err) {
@@ -62,9 +63,9 @@ router.post('/delComment', (req, res, next) => {
       req.flash('error', err);
       return res.redirect('/');
     }
+    let index;
     for (let i = 0; i < article.comment.length; i++) {
-      console.log(i)
-      if (article.comment[i]._id == req.body.cid && article.comment[i].uid === req.session.user.uid) {
+      if (article.comment[i]._id == req.body.cid && (article.comment[i].uid === req.session.user.uid || req.session.user.group === 'admin')) {
         article.removeComment(i, (err, article) => {
           if (err) {
             req.flash('error', err);
@@ -73,7 +74,6 @@ router.post('/delComment', (req, res, next) => {
           req.flash('success', '删除成功');
           res.send('success')
         });
-        break;
       }
     }
   });

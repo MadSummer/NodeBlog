@@ -38,15 +38,15 @@
   <hr/>
   <% article.forEach(function(article) {  %>
     <article class="article row" data-pid="<%= article._id %>">
-      <a href="/article/<%= article._id %>" target="_blank"><img src="/assets/images/cover.jpg" class="cover col-md-3"></a>
-      <div class="col-md-9">
+      <a href="/article/<%= article._id %>" target="_blank"><img src="/assets/images/cover.jpg" class="cover hidden-xs grid-1"></a>
+      <div class="grid-5">
         <header>
-          <a href="/p/<%= article._id %>" target="_blank">
+          <a href="/article/<%= article._id %>" target="_blank">
             <%= article.title %>
           </a>
         </header>
         <div class="summary">
-          <%- article.content.slice(0,70) %>
+          <%= article.content.slice(0,70) %>
         </div>
         <p>
           <span><i class="icon-time"></i><%= formatDate(article._id,2) %></span>
@@ -55,9 +55,8 @@
         </p>
       </div>
     </article>
-    <hr/>
     <% }) %>
-      </div>
-      </div>
-      </div>
-      <% include footer %>
+</div>
+</div>
+</div>
+<% include footer %>

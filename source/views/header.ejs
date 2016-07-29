@@ -59,11 +59,11 @@
             <li>
               <a href="/user/publish">发布文章</a>
             </li>
+            <% if(loginUser.group === 'admin'){ %>
             <li>
-              <% if(loginUser.group = 'admin'){ %>
               <a href="/admin">后台管理</a>
-              <% } %>
             </li>
+            <% } %>
             <li>
               <a href="/user/signout">退出</a>
             </li>

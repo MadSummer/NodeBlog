@@ -40,6 +40,7 @@ router.post('/signin', (req, res, next) => {
     return res.send();
   }
   userModel.get(req.body.signinuid, (err, user) => {
+    console.log('signin:' +user)
     if (err) {
       req.flash('error', err);
       return res.send()
@@ -120,6 +121,7 @@ router.post('/signup', (req, res, next) => {
 // 登出
 router.get('/signout', (req, res, next) => {
   req.session.user = null;
+  req.session.save();
   req.flash('success', '退出成功！');
   res.redirect('/');
 });
@@ -138,9 +140,6 @@ router.get('/publish', (req, res, next) => {
 });
 router.post('/publish/upload', upload.array('uploadfile', 1), function (req, res) {
   let destination = req.files[0].destination.slice(9) + '/';
-  console.log(req.files[0].destination)
-  console.log(destination)
-  console.log(req.files[0].filename)
   res.send(destination + req.files[0].filename)
 });
 router.post('/publish/submit', (req, res, next) => {
@@ -178,16 +177,16 @@ router.get('/:uid', (req, res, next) => {
   userModel.get(uid, (err, user) => {
     if (err) {
       req.flash('error', err)
-      return res.redirect('/');
+      return res.redirect('back');
     }
     if (!user) {
       req.flash('error', '没有此用户！');
-      return res.redirect('/');
+      return res.redirect('back');
     }
     articleModel.get({ 'uid': uid }, (err, article) => {
       if (err) {
         req.flash('error', err);
-        return res.redirect('/');
+        return res.redirect('back');
       }
       res.render('user', {
         title: user.name + '的个人主页-微博',
