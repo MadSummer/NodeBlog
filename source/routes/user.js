@@ -5,20 +5,21 @@ let articleModel = require('../modules/article');
 let router = express.Router();
 let multer = require('multer');
 let fs = require('fs');
+let path = require('path');
 let common = require('../modules/common');
 let crypto = require('crypto');
 let app = require('../app');
 let storage = multer.diskStorage({
   destination: function (req, file, callback) {
     let today = common.FormatDate(new Date(), 4);
-    let path = '../upload/data/' + today;
-    fs.exists(path, (exists) => {
+    let _path = path.join(ROOT_DIR, '/upload/images/', today);
+    fs.exists(_path, (exists) => {
       if (exists) {
-        callback(null, path);
+        callback(null, _path);
       }
       else {
-        fs.mkdir(path, () => {
-          callback(null, path);
+        fs.mkdir(_path, () => {
+          callback(null, _path);
         });
       }
     });
@@ -40,7 +41,7 @@ router.post('/signin', (req, res, next) => {
     return res.send();
   }
   userModel.get(req.body.signinuid, (err, user) => {
-    console.log('signin:' +user)
+    console.log('signin:' + user)
     if (err) {
       req.flash('error', err);
       return res.send()
@@ -139,8 +140,8 @@ router.get('/publish', (req, res, next) => {
   });
 });
 router.post('/publish/upload', upload.array('uploadfile', 1), function (req, res) {
-  let destination = req.files[0].destination.slice(9) + '/';
-  res.send(destination + req.files[0].filename)
+  let destination = path.normalize(req.files[0].destination.replace(ROOT_DIR,'').substr(7)+'/'+req.files[0].filename);
+  res.send(destination);
 });
 router.post('/publish/submit', (req, res, next) => {
   if (!req.session.user) {

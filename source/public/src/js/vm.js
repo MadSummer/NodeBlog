@@ -42,10 +42,10 @@ let vm = new Vue({
       // 两者document.documentElement.scrollTop||document.body.scrollTop有一个必定为0
       let scrollTop = (document.documentElement && document.documentElement.scrollTop) + document.body.scrollTop;
       if (scrollTop > 200) {
-        this.scrollTop = true;
+        this.state.scrollTop = true;
       }
       else {
-        this.scrollTop = false;
+        this.state.scrollTop = false;
       }
     }
     if (typeof wangEditor !== 'undefined' || typeof jQuery !== 'undefined') {

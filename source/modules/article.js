@@ -48,7 +48,7 @@ articleSchema.statics.getTen = function (query, callback) {
       break;
     case 'tag':
       let tag = new RegExp(query.tag, 'i');
-      condition = {'tags': {$regex: tag}};
+      condition = { 'tags': { $regex: tag } };
       break;
     case 'search':
       let reg = new RegExp(query.kw, 'i');

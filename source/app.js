@@ -20,16 +20,15 @@ let user = require('./routes/user');
 let getTen = require('./routes/getTen');
 /*实例化app为一个express应用*/
 let app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+global.ROOT_DIR = __dirname;
 app.use(session({
   secret: settings.cookieSecret,
   key: settings.db,//cookie name
   store: new MongoStore({
-    url: 'mongodb://localhost/blog'
+    url: 'mongodb://blog:LIUJING1871083@localhost/blog'
   })
 }));
 
