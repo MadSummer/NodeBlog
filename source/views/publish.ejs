@@ -6,8 +6,8 @@
     <form class="input-group" novalidate v-on:submit.prevent="publish">
       <label for="title">文章标题</label>
       <span class="color-danger" v-if="$publish.title.required">必须填写</span>
-      <span class="color-danger" v-if="$publish.title.maxlength">不得超过20字符</span>
-      <input type="text" name="title" id="title" class="input" v-model="title" v-validate:title="{required:true,maxlength:20}">
+      <span class="color-danger" v-if="$publish.title.maxlength">不得超过40字符</span>
+      <input type="text" name="title" id="title" class="input" v-model="title" v-validate:title="{required:true,maxlength:40}">
       <label for="content">文章内容</label>
       <textarea name="content"  id="editor"  class="input"></textarea>
       <label for="tags">标签</label>

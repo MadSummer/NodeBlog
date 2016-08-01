@@ -18,6 +18,7 @@ let index = require('./routes/index');
 let article = require('./routes/article');
 let user = require('./routes/user');
 let getTen = require('./routes/getTen');
+let admin = require('./routes/admin');
 /*实例化app为一个express应用*/
 let app = express();
 // view engine setup
@@ -46,6 +47,7 @@ app.use('/', index);
 app.use('/user', user);
 app.use('/article', article);
 app.use('/getten',getTen);
+app.use('/admin',admin);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   let err = new Error('Not Found');

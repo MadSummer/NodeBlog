@@ -25,7 +25,7 @@ let vm = new Vue({
       signin: true,
       signup: false,
       scrollTop: false,
-      sub: false
+      sub: false,
     },
     articles: [],
     page: 1,
@@ -50,6 +50,7 @@ let vm = new Vue({
     }
     if (typeof wangEditor !== 'undefined' || typeof jQuery !== 'undefined') {
       let editor = new wangEditor('editor');
+       editor.config.zindex = 20000;
       editor.config.uploadImgFileName = 'uploadfile'
       editor.config.uploadImgUrl = './publish/upload';
       editor.create();
@@ -81,9 +82,11 @@ let vm = new Vue({
     },
     search: function () {
       if (!this.kw || this.kw.length < 1) return alert('不输入让我搜索啥？');
+      this.loading = true;
       window.location.href = '/getten?action=search&page=1&kw=' + this.kw;
     },
     signin: function () {
+      this.state.loading = true;
       this.$http.post('/user/signin', { 'signinuid': this.signinuid, 'signinpsw': this.signinpsw, 'signinrmb': this.signinrmb })
         .then(
         (res) => {
@@ -92,24 +95,28 @@ let vm = new Vue({
         )
     },
     signup: function () {
+      this.state.loading = true;
       this.$http.post('/user/signup', { 'signupuid': this.signupuid, 'signuppsw': this.signuppsw, 'passwordre': this.passwordre, 'signupum': this.signupum })
         .then((res) => {
           window.location.href = window.location.href;
         })
     },
     publish: function () {
+      this.state.loading = true;
       this.$http.post('/user/publish/submit', { 'title': this.title, 'content': document.getElementById('editor').value, 'tags': this.tags })
         .then((res) => {
           window.location.href = '/article/' + res.json();
         })
     },
     pushComment: function () {
+      this.state.loading = true;
       this.$http.post('./pushComment', { 'commentname': this.commentname || null, 'commentemail': this.commentemail || null, 'commentcontent': this.commentcontent, 'pid': document.getElementsByClassName('article')[0].getAttribute('data-pid') })
         .then((res) => {
           window.location.href = window.location.href;
         });
     },
     delComment: function (e) {
+      this.state.loading = true;
       this.$http.post('./delComment',
         {
           'pid': document.getElementsByClassName('article')[0].getAttribute('data-pid'),
@@ -120,6 +127,7 @@ let vm = new Vue({
         })
     },
     delArticle: function (e) {
+      this.state.loading = true;
       this.$http.post('./delArticle', { 'pid': e.currentTarget.getAttribute('data-pid') })
         .then((res) => {
           window.location.href = '/';

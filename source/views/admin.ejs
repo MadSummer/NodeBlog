@@ -1,31 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+  瞅啥么瞅
+-->
+<html>
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    <title>后台管理系统</title>
-    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-  </head>
+<head>
+  <title>
+    后台管理
+  </title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="/dest/stylesheets/font-awesome.min.css">
+  <link rel="stylesheet" href="/dest/stylesheets/all.min.css" />
+</head>
 
-  <body>
-    <div class="container">
-        <h1>后台管理系统</h1>
-        <ul id="tab" class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#user" id="user-tab" role="tab" data-toggle="tab" aria-controls="user" aria-expanded="true">用户管理</a></li>
-          <li role="presentation" class=""><a href="#article" role="tab" id="article-tab" data-toggle="tab" aria-controls="article" aria-expanded="false">文章管理</a></li>
-          <li role="presentation" class="dropdown">
-            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Dropdown <span class="caret"></span></a>
-            <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-              <li><a href="#dropdown1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
-              <li><a href="#dropdown2" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
-            </ul>
-          </li>
-        </ul>
+<body id="app">
+  <div id="mask" v-show="mask" v-on:click="closeMask"></div>
+  <header id="header">
+    <a href="/" id="logo">
+      <img src="/assets/images/logo.png" alt="">
+      <span>记笔</span>
+    </a>
+  </header>
+  <header id="mobile-hd">
+    <a id="mobile-menu" v-on:click.stop="this.state.sidebar=!this.state.sidebar"><i class="icon-reorder"></i></a>
+    <img src="/assets/images/logo.png" alt="">
+  </header>
+  <div id="backtotop" v-show="state.scrollTop">
+    <a href="#app"><i class=" icon-arrow-up"></i></a>
+  </div>
+  <div class="container content">
+    <% if(success){ %>
+    <p class="alert-success">
+      <%= success %>
+    </p>
+    <% } %>
+    <% if(error){ %>
+    <p class="alert-danger">
+      <%= error %>
+    </p>
+    <% } %>
+    <div class="row">
+      <div class="tabel">
+        <a class="inline-block pull-left">用户管理</a>
+        <a class="inline-block pull-left">文章管理</a>
+      </div>
     </div>
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  </body>
+  </div>
+  <footer class="container">
+    <div class="row">
+      <h4 class="alert-info">网站基于NodeJS开发 ©2016</h4>
+      <h4 class="alert-warning">项目源码托管于<a href="https://github.com/MadSummer/NodeBlog" target="_blank">Github</a></h4>
+    </div>
+  </footer>
+  <script src="/dest/javascripts/all.min.js"></script>
+</body>
 
 </html>
