@@ -1,6 +1,9 @@
 # 说明
+
 # 项目预览地址：[blog.xhttkl.com](http://blog.xhttkl.com)
+
 # 技术栈：
+
 ## 服务器端
 1. 服务器语言：nodejs
 2. web框架：express
@@ -14,6 +17,7 @@ vue也是刚开始接触，比angular轻巧，只是一个view层，双向绑定
 4. jquery(逐渐用vue.js取代了，但是ajax部分还没有取代，暂时使用)
 5. ajax使用[vue-resource](https://github.com/vuejs/vue-resource)
 6. 表单验证 [vue-validate](https://github.com/vuejs/vue-validator)
+
 # 简介
   本来是想学着写node的，结果发现既然做了出来不如就当成自己的个人博客来写，就写成了了现在这个样子，有点不伦不类，不过自己用起来还是挺舒服的。
 
