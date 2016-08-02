@@ -1,7 +1,7 @@
 <% include header %>
   <article class="article row" v-for="article in articles" data-pid="{{article.pid}}">
-    <a href={{article.articleLink}} target="_blank" class="hidden-xs">
-      <img v-bind:src="article.cover" class="cover grid-2 hidden-xs">
+    <a href={{article.articleLink}} target="_blank" class="hidden-xs grid-2">
+      <img v-bind:src="article.cover">
     </a>
     <div class="grid-4">
       <header>

@@ -25,7 +25,7 @@ let common = {
     }
   },
   getQ: (params) => {
-    let reg = new RegExp("(^|&)" + params + "=([^&]*)(&|$)", "i");
+    let reg = new RegExp('(^|&)' + params + '=([^&]*)', 'i');
     let r = window.location.search.substr(1).match(reg);  //获取url中"?"符后的字符串并正则匹配
     let context = "";
     if (r != null)
