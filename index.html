@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Nodeblog : 基于node+express开发的博客系统">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Nodeblog</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/MadSummer/NodeBlog">View on GitHub</a>
+
+          <h1 id="project_title">Nodeblog</h1>
+          <h2 id="project_tagline">基于node+express开发的博客系统</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/MadSummer/NodeBlog/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/MadSummer/NodeBlog/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="说明" class="anchor" href="#%E8%AF%B4%E6%98%8E" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>说明</h1>
+
+<h1>
+<a id="项目预览地址blogxhttklcom" class="anchor" href="#%E9%A1%B9%E7%9B%AE%E9%A2%84%E8%A7%88%E5%9C%B0%E5%9D%80blogxhttklcom" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>项目预览地址：<a href="http://blog.xhttkl.com">blog.xhttkl.com</a>
+</h1>
+
+<h1>
+<a id="技术栈" class="anchor" href="#%E6%8A%80%E6%9C%AF%E6%A0%88" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>技术栈：</h1>
+
+<h2>
+<a id="服务器端" class="anchor" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>服务器端</h2>
+
+<ol>
+<li>服务器语言：<a href="https://nodejs.org/en/">nodejs</a>
+</li>
+<li>web框架：<a href="https://expressjs.com/">express</a>
+</li>
+<li>模板引擎：<a href="http://www.embeddedjs.com/">ejs</a>
+</li>
+</ol>
+
+<h2>
+<a id="数据库" class="anchor" href="#%E6%95%B0%E6%8D%AE%E5%BA%93" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>数据库</h2>
+
+<ol>
+<li>
+<p><a href="https://www.mongodb.com/">Mongodb</a></p>
+
+<p>mongodb是一个典型的NoSQL数据库，有专门的js驱动软件，譬如<a href="https://robomongo.org/">RobMongo</a>,学起来不是很费力</p>
+</li>
+<li>node模块：<a href="http://mongoosejs.com/">mongoose</a>
+</li>
+</ol>
+
+<h2>
+<a id="前端" class="anchor" href="#%E5%89%8D%E7%AB%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>前端</h2>
+
+<ol>
+<li>
+<p><a href="http://cn.vuejs.org/">vue</a></p>
+
+<p>vue也是刚开始接触，比angular轻巧，只是一个view层，双向绑定很值得研究</p>
+</li>
+<li>辅助jquery（富文本编辑器使用） </li>
+<li>富文本编辑器：基于jquery的<a href="http://wangeditor.github.io/">wangEditor</a>
+</li>
+<li>ajax使用<a href="https://github.com/vuejs/vue-resource">vue-resource</a>
+</li>
+<li>表单验证 <a href="https://github.com/vuejs/vue-validator">vue-validate</a>
+</li>
+</ol>
+
+<h1>
+<a id="简介" class="anchor" href="#%E7%AE%80%E4%BB%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>简介</h1>
+
+<p>本来是想学着写node的，结果发现既然做了出来不如就当成自己的个人博客来写，就写成了了现在这个样子，有点不伦不类，不过自己用起来还是挺舒服的。</p>
+
+<h2>
+<a id="功能" class="anchor" href="#%E5%8A%9F%E8%83%BD" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>功能</h2>
+
+<ul>
+<li>
+<p>多用户登录/注册</p>
+
+<p>这一部分本来想去掉的，后来还是留下来了，只是把注册部分注解掉了--</p>
+</li>
+<li>
+<p>管理员/普通用户</p>
+
+<p>用户分组管理员和普通用户，管理员可以删除任何文章和评论</p>
+</li>
+<li>
+<p>文章评论</p>
+
+<p>本来使用多说，后来一想你这破小博客谁会留言，还不如写个自己的呢--</p>
+</li>
+<li>
+<p>文章分类</p>
+
+<p>文章都有自己的标签，发布的时候用空格隔开即可，之后就可以通过标签查找文章</p>
+</li>
+<li>
+</ul>
+
+<h2>
+<a id="2016年8月12日112647" class="anchor" href="#2016%E5%B9%B48%E6%9C%8812%E6%97%A5112647" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2016年8月12日11:26:47</h2>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Nodeblog maintained by <a href="https://github.com/MadSummer">MadSummer</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
