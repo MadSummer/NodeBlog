@@ -1,4 +1,4 @@
-/*app.js是整个express应用程序的入口111*/
+/*app.js是整个express应用程序的入口*/
 'use strict';
 let express = require('express');
 let path = require('path');
@@ -29,11 +29,14 @@ app.use(session({
   secret: settings.cookieSecret,
   key: settings.db,//cookie name
   store: new MongoStore({
-    url: 'mongodb://blog:LIUJING1871083@localhost/blog'
+    url: 'mongodb://' + settings.user + ':' + settings.pwd + '@' + 'localhost/' + settings.db
   })
 }));
-
+/* app.use([path],function)
+  function 为中间件(middleware)，每一个请求过来都会顺序性的被中间件处理一次
+*/
 app.use(flash());
+console.log(111)
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));

@@ -8,7 +8,8 @@
  {safe: true});*/
 //  mongoose的写法
 let mongoose = require('mongoose');
-mongoose.connect('mongodb://blog:LIUJING1871083@localhost/blog');
+let settings = require('../settings');
+mongoose.connect('mongodb://' + settings.user + ':' + settings.pwd + '@' + 'localhost/' + settings.db);
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
