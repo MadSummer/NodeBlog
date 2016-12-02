@@ -27,7 +27,7 @@ router.post('/delArticle', (req, res, next) => {
       req.flash('error', err);
       return res.redirect('/');
     }
-    if (article.uid === req.session.user.uid || req.session.user.gropu === 'admin') {
+    if (article.uid === req.session.user.uid || req.session.user.group === 'admin') {
       articleModel.removeArticle(req.body.pid, (err, article) => {
         req.flash('success', '删除成功');
         res.send('success');

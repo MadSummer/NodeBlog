@@ -36,6 +36,7 @@ articleSchema.methods.pushComment = function (comment, callback) {
     name: comment.name,
     content: comment.content
   });
+  // this 代表 instance  实例
   this.comment.push(newComment);
   this.save(callback);
 }
@@ -59,15 +60,17 @@ articleSchema.statics.getTen = function (query, callback) {
     default:
       break;
   }
-  this.model('articles').find(condition, null, { skip: (query.page - 1) * 10, limit: 10, sort: { _id: -1 } }, callback);
+  this.find(condition, null, { skip: (query.page - 1) * 10, limit: 10, sort: { _id: -1 } }, callback);
 }
 // 得到一篇文章或者用户所有文章
 articleSchema.statics.get = function (query, callback) {
+  // this.model('articles') === this ---> true 😶 but why?
+  // this 代表的就是model
   if (query._id) {
-    this.model('articles').findByIdAndUpdate(query._id, { '$inc': { 'views': 1 } }, callback);
+    this.findByIdAndUpdate(query._id, { '$inc': { 'views': 1 } }, callback);
   }
   if (query.uid) {
-    this.model('articles').find({ uid: query.uid }, null, { skip: (1 - 1) * 10, limit: 10, sort: { _id: -1 } }, callback);
+    this.find({ uid: query.uid }, null, { skip: (1 - 1) * 10, limit: 10, sort: { _id: -1 } }, callback);
   }
 }
 // 删除文章

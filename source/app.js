@@ -36,15 +36,14 @@ app.use(session({
   function 为中间件(middleware)，每一个请求过来都会顺序性的被中间件处理一次
 */
 app.use(flash());
-console.log(111)
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'upload')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'upload')));
 // router control
 app.use('/', index);
 app.use('/user', user);
